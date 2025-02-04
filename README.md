@@ -11,7 +11,7 @@ Java is required to run this project.
 2. you may specify the port the server will be running on by editing the value `src/main/resources/application.properties`. The default is `server.port=80`;
 3. run `mvn package -Dmaven.test.skip` on the root folder;
 4. an executable `nebulous-ont-x.y.z.jar` file will be created in the `target` folder;
-5. run the executable by using the `java -jar nebulous-ont-x.y.z.jar {{ontology file}}` command.  You need to pass the ontology file location as a parameter. The ontology file (`nebulous.ttl`) is on `src/main/resources`
+5. run the executable by using the `java -jar nebulous-ont-x.y.z.jar {{ontology file}}` command. You need to pass the ontology file location as a parameter.
 
 Terminating the program is done by aborting the task (CTRL + c in most command lines). 
 Currently, the ontology server has an in-memory implementation and terminating the program will erase the current ontology.
@@ -33,6 +33,7 @@ Other component owners should have little reason to directly use the Ontology Se
 ## Post Requests
 
 | URL | Request Body | Returns | Description |
+| --- | ------------ | ------- | ----------- |
 | /save | --- | --- | Save the ontology in a file named `output.ttl` in the same directory as the .jar |
 | /create/individual | {"individualURI": "xxx", "classURI": "yyy"} | --- | create an individual of the specified class with the specified URI |
 | /create/objectProperty | {"objectPropertyURI": "xxx", "domainURI": "yyy", "rangeURI": "zzz"} | --- | Create an object property assertion using the specified object property between the two specified instances |
