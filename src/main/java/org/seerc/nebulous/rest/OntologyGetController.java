@@ -33,12 +33,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class OntologyGetController {
 	private OntologyDAO ontology = OntologyDAO.getInstance();
 
-
-	
-    @GetMapping("/print")
-    public void print() {
-    	ontology.print();
-    }
     @GetMapping("/save")
     public void save() {
     	ontology.saveToFile();
