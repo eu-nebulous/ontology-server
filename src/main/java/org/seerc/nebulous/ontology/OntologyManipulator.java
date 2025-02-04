@@ -4,9 +4,13 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.providers.DataAssertionProvider;
 //import org.semanticweb.owlapi.model.OWLObjectProperty;
 //import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.util.OWLEntityRemover;
+import org.semanticweb.owlapi.util.OWLLiteralReplacer;
+import org.semanticweb.owlapi.vocab.OWL2Datatype;
+import org.semanticweb.owlapitools.builders.BuilderDataPropertyAssertion;
 
 /**
  * Contains all methods that are about changing the ontology (addition, amendment, removal, etc.) in some way.
@@ -30,6 +34,8 @@ public class OntologyManipulator extends OntologyInformationHolder{
 	    manager.addAxiom(ontology, factory.getOWLClassAssertionAxiom(
 	    		factory.getOWLClass(classURI, prefixManager),
 	    		factory.getOWLNamedIndividual(individualURI, prefixManager)));
+	    
+	 
 	}
 	
 	/**
@@ -52,21 +58,22 @@ public class OntologyManipulator extends OntologyInformationHolder{
 	 * @param value The value of the data property.
 	 */
 	public void createDataProperty(String dataPropertyURI,String individualURI, Object value) {
-		
+
 		OWLDataProperty dataProperty = factory.getOWLDataProperty(dataPropertyURI, prefixManager);
 		OWLNamedIndividual individual = factory.getOWLNamedIndividual(individualURI, prefixManager);
 		OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom;
-		
-		if(value.getClass().equals(Boolean.class))
+		if(value.getClass().equals(Boolean.class)) 
 			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Boolean) value);
 		else if(value.getClass().equals(Integer.class))
 			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Integer) value);
+		else if(value.getClass().equals(Long.class)) 
+			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(value.toString(), OWL2Datatype.XSD_LONG) );
 		else if(value.getClass().equals(String.class)) {
 			String v = (String) value; 
 			if(v.matches("^(-?)P(?=.)((\\d+)Y)?((\\d+)M)?((\\d+)D)?(T(?=.)((\\d+)H)?((\\d+)M)?(\\d*(\\.\\d+)?S)?)?$")) {
 				dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(v, factory.getOWLDatatype("xsd:duration", prefixManager)));
 			}else
-				dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, v);
+				dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(v, OWL2Datatype.XSD_STRING));
 		}
 		else if (value.getClass().equals(Double.class))
 			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Double) value);
@@ -75,6 +82,7 @@ public class OntologyManipulator extends OntologyInformationHolder{
 		else
 			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (OWLLiteral) value);
 
+		
 		manager.addAxiom(ontology, dataPropertyAssertionAxiom);
 	}
 	

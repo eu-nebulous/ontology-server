@@ -10,10 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NebulousApplication {
 
 	public static void main(String[] args) {
-		OntologyDAO ont = OntologyDAO.getInstance();
-		
-//		ont.loadMetricsFromCocoon();
-		SpringApplication.run(NebulousApplication.class);
+		boolean ontologyError = false;		
+		try {
+			 OntologyDAO.getInstance(args[0]);
+		} catch (Exception e) {
+			System.out.println("Could not create ontology...\nMake sure you have provided a valid ontology file...\nExiting...");
+			ontologyError = true;
+		}
+		if(!ontologyError)
+			SpringApplication.run(NebulousApplication.class);
 	}
 
 }

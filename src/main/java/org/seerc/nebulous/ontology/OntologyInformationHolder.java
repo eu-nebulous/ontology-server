@@ -17,14 +17,11 @@ public class OntologyInformationHolder {
 	protected OWLDataFactory factory;
 	protected PrefixManager prefixManager;
 	
-	OntologyInformationHolder(String ontologyIRI, String defaultPrefix) {
+	OntologyInformationHolder(String ontologyIRI, String defaultPrefix) throws OWLOntologyCreationException {
 		this.manager = OWLManager.createOWLOntologyManager();
-		try {
 			ontology = manager.loadOntologyFromOntologyDocument(new File(ontologyIRI));
-		} catch (OWLOntologyCreationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			
+
 		this.factory = manager.getOWLDataFactory();
 		this.prefixManager = new DefaultPrefixManager(defaultPrefix);
 	}
@@ -35,4 +32,22 @@ public class OntologyInformationHolder {
 		this.prefixManager =ontInf.prefixManager;
 		this.factory = ontInf.factory;
 	}
+
+	public PrefixManager getPrefixManager() {
+		return prefixManager;
+	}
+
+	public OWLOntologyManager getManager() {
+		return manager;
+	}
+
+	public OWLOntology getOntology() {
+		return ontology;
+	}
+
+	public OWLDataFactory getFactory() {
+		return factory;
+	}
+	
+	
 }

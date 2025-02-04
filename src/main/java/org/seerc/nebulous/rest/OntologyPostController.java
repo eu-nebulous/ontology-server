@@ -20,21 +20,22 @@ public class OntologyPostController {
 	@PostMapping("/create/individual")
 	void createIndividual(@RequestBody CreateIndividualPostBody postBody) {
 		ontology.getManipulator().createIndividual(postBody.getIndividualURI(), postBody.getClassURI());
-		System.out.println("Created: " + postBody);
+		Logger.post("Class Assertion", postBody.getIndividualURI(), postBody.getClassURI());
 
 	}
 	
 	@PostMapping("/create/objectProperty")
 	void createObjectProperty(@RequestBody CreateObjectPropertyPostBody postBody) {
 		ontology.getManipulator().createObjectProperty(postBody.getObjectPropertyURI(), postBody.getDomainURI(), postBody.getRangeURI());
-		System.out.println("Created: " + postBody);
 
+		Logger.post("Object Property Assertion", "Object Property: " + postBody.getObjectPropertyURI(), "Domain: " + postBody.getDomainURI(), "Range: " + postBody.getRangeURI());
+		
 	}
 	
 	@PostMapping("/create/dataProperty")
 	void createDataProperty(@RequestBody CreateDataPropertyPostBody postBody) {
 		ontology.getManipulator().createDataProperty(postBody.getDataPropertyURI(), postBody.getDomainURI(), postBody.getValue());
-		System.out.println("Created: " + postBody);
+		Logger.post("Data Property Assertion", "Data Property: " + postBody.getDataPropertyURI(), "Domain: " + postBody.getDomainURI(), "Value: " + postBody.getValue());
 
 	}
 	
