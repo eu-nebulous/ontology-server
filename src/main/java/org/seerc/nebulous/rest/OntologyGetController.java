@@ -19,6 +19,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.reasoner.ReasonerInternalException;
 import org.semanticweb.owlapi.search.EntitySearcher;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
 import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
@@ -177,7 +178,24 @@ public class OntologyGetController {
 
     	return dataProperties;
     }
-    
+    @GetMapping("/get/dataProperty/values")
+    public List<DataPropertyValuesResult> getDataPropertyValues(@RequestParam String individualName, @RequestParam String dataProperty){
+    	 
+    	ontology.getReasoner().flush();
+    	
+    	List<OWLLiteral> dp = ontology.getReasoner().getIndividualDataProperties(individualName, dataProperty);
+    	List<DataPropertyValuesResult> dataProperties = new ArrayList<DataPropertyValuesResult>(dp.size());
+
+    	if(dp.size() == 0)
+    		dataProperties = List.of(new DataPropertyValuesResult("ERROR", "ERROR"));
+    	else
+	    	for(OWLLiteral lit : dp)
+	    		dataProperties.add(new DataPropertyValuesResult(lit.getDatatype().getIRI().getShortForm(), lit.getLiteral()));
+    	
+    	Logger.get("Retrieve Data Property Values", "Individual: " + individualName, "Data Property: " + dataProperty	);
+    	
+    	return dataProperties;
+    }
 
 
     @GetMapping("/get/superclasses")
@@ -189,10 +207,40 @@ public class OntologyGetController {
     	for(OWLClass c : cls)
     		res.add(c.getIRI().getFragment());
     	
-    	Logger.get("Retrieve Superclasses", query, res	.toString());
+    	Logger.get("Retrieve Superclasses", query, res.toString());
 
     	
     	return res;
     	
+    }
+    
+    @GetMapping("/get/subclasses")
+    public List<String> getSubclass(@RequestParam String dlQuery){
+    	
+    	String query = URLDecoder.decode(dlQuery, StandardCharsets.UTF_8);
+    	Set<OWLClass> cls = ontology.getReasoner().getSubClasses(query, false);
+    	List<String> res = new ArrayList<String>(cls.size());
+    	for(OWLClass c : cls)
+    		res.add(c.getIRI().getFragment());
+    	
+    	Logger.get("Retrieve Subclasses", query, res.toString());
+
+    	
+    	return res;
+    }
+    
+    @GetMapping("/get/equivalentClasses")
+    public List<String> getEquivalentclass(@RequestParam String dlQuery){
+    	
+    	String query = URLDecoder.decode(dlQuery, StandardCharsets.UTF_8);
+    	Set<OWLClass> cls = ontology.getReasoner().getSubClasses(query, false);
+    	List<String> res = new ArrayList<String>(cls.size());
+    	for(OWLClass c : cls)
+    		res.add(c.getIRI().getFragment());
+    	
+    	Logger.get("Retrieve Equivalentclasses", query, res.toString());
+
+    	
+    	return res;
     }
 }
