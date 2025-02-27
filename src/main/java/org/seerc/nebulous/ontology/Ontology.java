@@ -95,6 +95,7 @@ public class Ontology extends OntologyInformationHolder{
 		}
 	}
 
+	
 	public OntologyManipulator getManipulator() {
 		return manipulator;
 	}

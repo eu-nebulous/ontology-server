@@ -17,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationSubject;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.reasoner.ReasonerInternalException;
@@ -214,6 +215,18 @@ public class OntologyGetController {
     	
     }
     
+    @GetMapping("/get/equivalent/dataProperties")
+    public void getEquivalentDataProperties(@RequestParam String dataProperty){
+//    	List<String> result = null;
+    	
+    	for(OWLEquivalentDataPropertiesAxiom dp : ontology.getReasoner().equivalentDataProperties(dataProperty)) {
+    		System.out.println(dp);
+    	}
+    	
+    	
+//    	void result;
+    }
+    
     @GetMapping("/get/subclasses")
     public List<String> getSubclass(@RequestParam String dlQuery){
     	
@@ -243,4 +256,5 @@ public class OntologyGetController {
     	
     	return res;
     }
+    
 }

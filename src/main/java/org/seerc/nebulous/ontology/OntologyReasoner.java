@@ -23,6 +23,7 @@ import org.semanticweb.owlapi.expression.OWLEntityChecker;
 import org.semanticweb.owlapi.expression.ShortFormEntityChecker;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
@@ -76,7 +77,6 @@ public class OntologyReasoner extends OntologyInformationHolder{
     
 	public Set<OWLClass> getSuperClasses(String classExpressionString, boolean direct) {
 		flush();
-        reasoner.refresh();
 
         if (classExpressionString.trim().isEmpty()) {
             return Collections.emptySet();
@@ -88,7 +88,6 @@ public class OntologyReasoner extends OntologyInformationHolder{
     
     public Set<OWLClass> getEquivalentClasses(String classExpressionString) {
     	flush();
-        reasoner.refresh();
 
         if (classExpressionString.trim().isEmpty()) {
             return Collections.emptySet();
@@ -125,6 +124,12 @@ public class OntologyReasoner extends OntologyInformationHolder{
     
     public void flush() {
     	reasoner.flush();
+    }
+    
+    public Set<OWLEquivalentDataPropertiesAxiom> equivalentDataProperties(String dataPropertyURI) {
+    	
+    	
+    	return ontology.getEquivalentDataPropertiesAxioms(factory.getOWLDataProperty(dataPropertyURI, prefixManager));
     }
  
 }
