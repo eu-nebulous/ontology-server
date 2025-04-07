@@ -20,31 +20,31 @@ public class OntologyPostController {
 	@PostMapping("/create/individual")
 	void createIndividual(@RequestBody CreateIndividualPostBody postBody) {
 		ontology.getManipulator().createIndividual(postBody.getIndividualURI(), postBody.getClassURI());
-		Logger.post("Class Assertion", postBody.getIndividualURI(), postBody.getClassURI());
+//		Logger.post("Class Assertion", postBody.getIndividualURI(), postBody.getClassURI());
 
 	}
 	@PostMapping("/create/individual/expression")
 	void createIndividualClassExpression(@RequestBody CreateIndividualPostBody postBody) {
 		ontology.getManipulator().createIndividualClassExpression(postBody.getIndividualURI(), postBody.getClassURI());
-		Logger.post("Class Assertion", postBody.getIndividualURI(), postBody.getClassURI());
+//		Logger.post("Class Assertion", postBody.getIndividualURI(), postBody.getClassURI());
 
 	}
 	@PostMapping("/create/class/expression")
 	void createClassDescriptionClass(@ RequestBody CreateClassExpressionClassPostBody postBody) {
 		ontology.getManipulator().createClassExpressionClass(postBody.getClassURI(), postBody.getClassExpression());
-		Logger.post("Class Creation", postBody.getClassURI(), postBody.getClassExpression());
+//		Logger.post("Class Creation", postBody.getClassURI(), postBody.getClassExpression());
 	}
 	
 	@PostMapping("/create/objectProperty")
 	void createObjectProperty(@RequestBody CreateObjectPropertyPostBody postBody) {
 		ontology.getManipulator().createObjectProperty(postBody.getObjectPropertyURI(), postBody.getDomainURI(), postBody.getRangeURI());
-		Logger.post("Object Property Assertion", "Object Property: " + postBody.getObjectPropertyURI(), "Domain: " + postBody.getDomainURI(), "Range: " + postBody.getRangeURI());
+//		Logger.post("Object Property Assertion", "Object Property: " + postBody.getObjectPropertyURI(), "Domain: " + postBody.getDomainURI(), "Range: " + postBody.getRangeURI());
 	}
 	
 	@PostMapping("/create/dataProperty")
 	void createDataProperty(@RequestBody CreateDataPropertyPostBody postBody) {
 		ontology.getManipulator().createDataProperty(postBody.getDataPropertyURI(), postBody.getDomainURI(), postBody.getValue());
-		Logger.post("Data Property Assertion", "Data Property: " + postBody.getDataPropertyURI(), "Domain: " + postBody.getDomainURI(), "Value: " + postBody.getValue());
+//		Logger.post("Data Property Assertion", "Data Property: " + postBody.getDataPropertyURI(), "Domain: " + postBody.getDomainURI(), "Value: " + postBody.getValue());
 
 	}
 	
