@@ -23,6 +23,7 @@ import org.semanticweb.owlapi.expression.OWLEntityChecker;
 import org.semanticweb.owlapi.expression.ShortFormEntityChecker;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
@@ -30,22 +31,19 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.NodeSet;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerConfiguration;
 import org.semanticweb.owlapi.search.EntitySearcher;
 
 public class OntologyReasoner extends OntologyInformationHolder{
 
 	private OpenlletReasoner reasoner;
-	private ShortFormProvider shortFormProvider;
-	private BidirectionalShortFormProvider bidiShortFormProvider;
+	private Ontology ont;
 
-
-	OntologyReasoner(OntologyInformationHolder ont) {
+	OntologyReasoner(Ontology ont) {
 		super(ont);
-		
-		reasoner = OpenlletReasonerFactory.getInstance().createReasoner(ontology);
-		shortFormProvider = new SimpleShortFormProvider();
-
-        bidiShortFormProvider = new BidirectionalShortFormProviderAdapter(manager, ontology.getImportsClosure(), shortFormProvider);
+		this.ont = ont;
+		reasoner = OpenlletReasonerFactory.getInstance().createNonBufferingReasoner(ontology);
 	}
 	public List<String> getSuperObjectProperties(OWLObjectProperty obj) {
 		flush();
@@ -76,47 +74,38 @@ public class OntologyReasoner extends OntologyInformationHolder{
 		return EntitySearcher.getObjectPropertyValues(factory.getOWLNamedIndividual(individualURI, prefixManager), ontology).asMap();
 	}
 	
-	
-	public OWLClassExpression parseClassExpression(String classExpressionString) {
-	        // Set up the real parser
-	        ManchesterOWLSyntaxParser parser = OWLManager.createManchesterParser();
-	        parser.setStringToParse(classExpressionString);
-	        parser.setDefaultOntology(ontology);
-	        // Specify an entity checker that wil be used to check a class
-	        // expression contains the correct names.
-	        OWLEntityChecker entityChecker = new  ShortFormEntityChecker(bidiShortFormProvider);
-	        parser.setOWLEntityChecker(entityChecker);
-	        // Do the actual parsing
-	        return parser.parseClassExpression();
-	}
     
 	public Set<OWLClass> getSuperClasses(String classExpressionString, boolean direct) {
 		flush();
+
         if (classExpressionString.trim().isEmpty()) {
             return Collections.emptySet();
         }
-        OWLClassExpression classExpression = parseClassExpression(classExpressionString);
+        OWLClassExpression classExpression = ont.parseClassExpression(classExpressionString);
         NodeSet<OWLClass> superClasses = reasoner.getSuperClasses(classExpression, direct);
         return asUnorderedSet(superClasses.entities());
 	}
     
     public Set<OWLClass> getEquivalentClasses(String classExpressionString) {
     	flush();
+
         if (classExpressionString.trim().isEmpty()) {
             return Collections.emptySet();
         }
-        OWLClassExpression classExpression = parseClassExpression(classExpressionString);
+        OWLClassExpression classExpression = ont.parseClassExpression(classExpressionString);
         Node<OWLClass> equivalentClasses = reasoner.getEquivalentClasses(classExpression);
         return asUnorderedSet(
-            equivalentClasses.entities().filter(cl -> !cl.equals(classExpression)));
+            equivalentClasses.entities());//.filter(cl -> !cl.equals(classExpression)));
     }
 
     public Set<OWLClass> getSubClasses(String classExpressionString, boolean direct) {
     	flush();
+        reasoner.refresh();
+
         if (classExpressionString.trim().isEmpty()) {
             return Collections.emptySet();
         }
-        OWLClassExpression classExpression = parseClassExpression(classExpressionString);
+        OWLClassExpression classExpression = ont.parseClassExpression(classExpressionString);
         NodeSet<OWLClass> subClasses = reasoner.getSubClasses(classExpression, direct);
         
         return asUnorderedSet(subClasses.entities());
@@ -124,16 +113,23 @@ public class OntologyReasoner extends OntologyInformationHolder{
 
     public Set<OWLNamedIndividual> getInstances(String classExpressionString, boolean direct) {
     	flush();
+
         if (classExpressionString.trim().isEmpty()) {
             return Collections.emptySet();
         }
-        OWLClassExpression classExpression = parseClassExpression(classExpressionString);
+        OWLClassExpression classExpression = ont.parseClassExpression(classExpressionString);
         NodeSet<OWLNamedIndividual> individuals = reasoner.getInstances(classExpression, direct);
         return asUnorderedSet(individuals.entities());
     }
     
     public void flush() {
     	reasoner.flush();
+    }
+    
+    public Set<OWLEquivalentDataPropertiesAxiom> equivalentDataProperties(String dataPropertyURI) {
+    	
+    	
+    	return ontology.getEquivalentDataPropertiesAxioms(factory.getOWLDataProperty(dataPropertyURI, prefixManager));
     }
  
 }

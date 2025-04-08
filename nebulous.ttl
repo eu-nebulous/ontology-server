@@ -101,7 +101,7 @@ odrl:rightOperandReference rdf:type owl:AnnotationProperty ;
 
 ###  http://www.w3.org/ns/odrl/2/source
 odrl:source rdf:type owl:AnnotationProperty ;
-            rdfs:domain _:genid-nodeid-genid-b6f30276336b471c8203e9a9751cae2e-A8EE8C9EFE0C289CD03163E20C09B594 .
+            rdfs:domain _:genid-nodeid-genid-007e538640724ccbb7aca1df1e27530b-D522EAE98047DB26F9EB0D53C95D9A22 .
 
 
 ###  http://www.w3.org/ns/odrl/2/status
@@ -111,7 +111,7 @@ odrl:status rdf:type owl:AnnotationProperty ;
 
 ###  http://www.w3.org/ns/odrl/2/uid
 odrl:uid rdf:type owl:AnnotationProperty ;
-         rdfs:domain _:genid-nodeid-genid-b6f30276336b471c8203e9a9751cae2e-491E4AB65AB80F3C38C438829C14DE31 .
+         rdfs:domain _:genid-nodeid-genid-007e538640724ccbb7aca1df1e27530b-9E46D33AF7CDCFC2DD5EB6FDA2120C38 .
 
 
 ###  http://www.w3.org/ns/odrl/2/unit
@@ -306,7 +306,6 @@ owlq:entity rdf:type owl:ObjectProperty ;
 ###  http://www.ics.forth.gr/ontologies/owl-q/owlq#firstArgument
 owlq:firstArgument rdf:type owl:ObjectProperty ;
                    owl:equivalentProperty odrl:leftOperand ;
-                   rdf:type owl:FunctionalProperty ;
                    rdfs:domain owlq:SimpleConstraint ;
                    rdfs:range owlq:Argument .
 
@@ -458,7 +457,6 @@ owlq:obliged rdf:type owl:ObjectProperty ;
 ###  http://www.ics.forth.gr/ontologies/owl-q/owlq#operator
 owlq:operator rdf:type owl:ObjectProperty ;
               owl:equivalentProperty neb:nebOperator ;
-              rdf:type owl:FunctionalProperty ;
               rdfs:domain owlq:SimpleConstraint ;
               rdfs:range [ rdf:type owl:Class ;
                            owl:unionOf ( owlq:ComparisonOperator
@@ -913,8 +911,7 @@ odrl:inheritRelation rdf:type owl:ObjectProperty .
 
 
 ###  http://www.w3.org/ns/odrl/2/leftOperand
-odrl:leftOperand rdf:type owl:ObjectProperty ,
-                          owl:FunctionalProperty ;
+odrl:leftOperand rdf:type owl:ObjectProperty ;
                  rdfs:domain odrl:Constraint ;
                  rdfs:range odrl:LeftOperand .
 
@@ -1048,8 +1045,7 @@ odrl:xone rdf:type owl:ObjectProperty ;
 
 
 ###  https://nebulouscloud.eu/ontology/nebOperator
-neb:nebOperator rdf:type owl:ObjectProperty ,
-                         owl:FunctionalProperty .
+neb:nebOperator rdf:type owl:ObjectProperty .
 
 
 ###  https://nebulouscloud.eu/ontology/owlqConstraint
@@ -1154,8 +1150,7 @@ owlq:end rdf:type owl:DatatypeProperty ;
 
 
 ###  http://www.ics.forth.gr/ontologies/owl-q/owlq#evaluationPeriod
-owlq:evaluationPeriod rdf:type owl:DatatypeProperty ,
-                               owl:FunctionalProperty ;
+owlq:evaluationPeriod rdf:type owl:DatatypeProperty ;
                       rdfs:domain [ rdf:type owl:Class ;
                                     owl:unionOf ( owlq:SLTransition
                                                   owlq:Settlement
@@ -1445,7 +1440,6 @@ owlq:scheduleType rdf:type owl:DatatypeProperty ;
 ###  http://www.ics.forth.gr/ontologies/owl-q/owlq#secondArgument
 owlq:secondArgument rdf:type owl:DatatypeProperty ;
                     owl:equivalentProperty odrl:rightOperand ;
-                    rdf:type owl:FunctionalProperty ;
                     rdfs:domain owlq:SimpleConstraint ;
                     neb:used "true"^^xsd:boolean .
 
@@ -1463,8 +1457,7 @@ owlq:serviceURI rdf:type owl:DatatypeProperty ;
 
 
 ###  http://www.ics.forth.gr/ontologies/owl-q/owlq#settlementAction
-owlq:settlementAction rdf:type owl:DatatypeProperty ,
-                               owl:FunctionalProperty ;
+owlq:settlementAction rdf:type owl:DatatypeProperty ;
                       rdfs:domain owlq:Settlement ;
                       rdfs:range [ rdf:type rdfs:Datatype ;
                                    owl:oneOf [ rdf:type rdf:List ;
@@ -1481,16 +1474,14 @@ owlq:settlementAction rdf:type owl:DatatypeProperty ,
 
 
 ###  http://www.ics.forth.gr/ontologies/owl-q/owlq#settlementCount
-owlq:settlementCount rdf:type owl:DatatypeProperty ,
-                              owl:FunctionalProperty ;
+owlq:settlementCount rdf:type owl:DatatypeProperty ;
                      rdfs:domain owlq:Settlement ;
                      rdfs:range xsd:integer ;
                      neb:used "true"^^xsd:boolean .
 
 
 ###  http://www.ics.forth.gr/ontologies/owl-q/owlq#settlementPricePercentage
-owlq:settlementPricePercentage rdf:type owl:DatatypeProperty ,
-                                        owl:FunctionalProperty ;
+owlq:settlementPricePercentage rdf:type owl:DatatypeProperty ;
                                rdfs:domain owlq:SLOCompensation ;
                                rdfs:range xsd:double ;
                                neb:used "true"^^xsd:boolean .
@@ -1642,8 +1633,7 @@ odrl:proximity rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.w3.org/ns/odrl/2/rightOperand
-odrl:rightOperand rdf:type owl:DatatypeProperty ,
-                           owl:FunctionalProperty .
+odrl:rightOperand rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.w3.org/ns/odrl/2/timedCount
@@ -1652,28 +1642,23 @@ odrl:timedCount rdf:type owl:DatatypeProperty ;
 
 
 ###  https://nebulouscloud.eu/ontology/active
-neb:active rdf:type owl:DatatypeProperty ,
-                    owl:FunctionalProperty .
+neb:active rdf:type owl:DatatypeProperty .
 
 
 ###  https://nebulouscloud.eu/ontology/affinity
-neb:affinity rdf:type owl:DatatypeProperty ,
-                      owl:FunctionalProperty .
+neb:affinity rdf:type owl:DatatypeProperty .
 
 
 ###  https://nebulouscloud.eu/ontology/formula
-neb:formula rdf:type owl:DatatypeProperty ,
-                     owl:FunctionalProperty .
+neb:formula rdf:type owl:DatatypeProperty .
 
 
 ###  https://nebulouscloud.eu/ontology/type
-neb:type rdf:type owl:DatatypeProperty ,
-                  owl:FunctionalProperty .
+neb:type rdf:type owl:DatatypeProperty .
 
 
 ###  https://nebulouscloud.eu/ontology/value
-neb:value rdf:type owl:DatatypeProperty ,
-                   owl:FunctionalProperty .
+neb:value rdf:type owl:DatatypeProperty .
 
 
 #################################################################

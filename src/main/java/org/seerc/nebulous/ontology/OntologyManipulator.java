@@ -1,5 +1,7 @@
 package org.seerc.nebulous.ontology;
 
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -19,9 +21,20 @@ public class OntologyManipulator extends OntologyInformationHolder{
 	
 	
 	 private OWLEntityRemover remover = new OWLEntityRemover(ontology);
-
-	OntologyManipulator(OntologyInformationHolder ont) {
+	 private Ontology ont;
+	 
+	OntologyManipulator(Ontology ont) {
 		super(ont);
+		this.ont = ont;
+	}
+	
+	
+	
+	
+	public void createClassExpressionClass(String classURI, String classExpression) {
+		manager.addAxiom(ontology, factory.getOWLEquivalentClassesAxiom(
+				factory.getOWLClass(classURI, prefixManager),
+				ont.parseClassExpression(classExpression)));
 	}
 	
 	/**
@@ -34,8 +47,12 @@ public class OntologyManipulator extends OntologyInformationHolder{
 	    manager.addAxiom(ontology, factory.getOWLClassAssertionAxiom(
 	    		factory.getOWLClass(classURI, prefixManager),
 	    		factory.getOWLNamedIndividual(individualURI, prefixManager)));
-	    
-	 
+	}
+	
+	public void createIndividualClassExpression(String individualURI, String classExpression){
+	    manager.addAxiom(ontology, factory.getOWLClassAssertionAxiom(
+	    		ont.parseClassExpression(classExpression),
+	    		factory.getOWLNamedIndividual(individualURI, prefixManager)));
 	}
 	
 	/**
