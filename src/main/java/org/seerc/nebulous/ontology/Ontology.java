@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
@@ -29,6 +32,7 @@ public class Ontology extends OntologyInformationHolder{
 	protected OntologyReasoner reasoner;
 	private BidirectionalShortFormProvider bidiShortFormProvider;
 	private ShortFormProvider shortFormProvider;
+	Map<String, Long> assets;
 
 	protected Ontology(String ontologyLocation, String defaultPrefix) throws OWLOntologyCreationException {
 		super(ontologyLocation, defaultPrefix);
@@ -39,10 +43,13 @@ public class Ontology extends OntologyInformationHolder{
 
 		manipulator = new OntologyManipulator(this);
 		reasoner = new OntologyReasoner(this);
+		assets = new HashMap<String, Long>();
+		
 		
 	}
 	public void saveToFile(){
 		try {
+			
 			File f = new File("output.ttl");
 			PrintStream p = new PrintStream(f);
 			ontology.saveOntology(new TurtleDocumentFormat(), p);
@@ -51,30 +58,33 @@ public class Ontology extends OntologyInformationHolder{
 			e.printStackTrace();
 		}
 	}
-//	public void loadMetricsFromCocoon() {
-//		Set<OWLObjectProperty> tq = new HashSet<OWLObjectProperty>();
-//		Set<OWLObjectProperty> cs = new HashSet<OWLObjectProperty>();
-//		Set<OWLObjectProperty> ss = new HashSet<OWLObjectProperty>();
-//		Set<OWLObjectProperty> ns = new HashSet<OWLObjectProperty>();
-//		Set<OWLObjectProperty> as = new HashSet<OWLObjectProperty>();
-//
-//		cs.addAll(reasoner.getObjectPropertiesWithDomain("ComputeService"));
-//		ns.addAll(reasoner.getObjectPropertiesWithDomain("StorageService"));
-//		ss.addAll(reasoner.getObjectPropertiesWithDomain("NetworkService"));
-//
-//		as.addAll(cs);
-//		as.addAll(ns);
-//		as.addAll(ss);
-//
-//		tq.addAll(reasoner.getObjectPropertiesWithRange("TypeAndQuantityNode"));
-//
-//		System.out.println("Range:TypeAndQualityNode = Domain:Compute/Storage/NetworkService: " + tq.equals(as));
-//
-//		createMetric(cs, "neb:COMPUTATION");
-//		createMetric(ss, "neb:STORAGE");
-//		createMetric(ns, "neb:NETWORKING");
-//	}
-	public OWLClassExpression parseClassExpression(String classExpressionString) {
+	public void registerAsset(String assetName, long timestamp) {
+		assets.put(assetName, timestamp);
+	}
+	public void removeAsset(String assetName) {
+		assets.remove(assetName);
+	}
+	public String removeEarliestAsset() {
+		long timestamp = Long.MAX_VALUE;
+		String assetName = null;
+		for(Entry<String, Long> asset : assets.entrySet()) {
+			if(asset.getValue() < timestamp) {
+				timestamp = asset.getValue();
+				assetName = asset.getKey();
+			}
+		}
+		removeAsset(assetName);
+		String indName = assetName.split(":")[1];
+
+		manipulator.deleteIndividuals(		
+			reasoner.getInstances("partOf value " + indName + " or inverse partOf value " + indName + " or {" +indName + "}", false)
+		);
+		return assetName;
+	}
+	public int numberOfAssets() {
+		return assets.size();
+	}
+ 	public OWLClassExpression parseClassExpression(String classExpressionString) {
         // Set up the real parser
         ManchesterOWLSyntaxParser parser = OWLManager.createManchesterParser();
         parser.setStringToParse(classExpressionString);

@@ -2,6 +2,7 @@ package org.seerc.nebulous.rest;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.seerc.nebulous.ontology.OntologyDAO;
+import org.seerc.nebulous.sql.Database;
+import org.seerc.nebulous.sql.DatabaseDAO;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ParserException;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
@@ -17,14 +20,17 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationSubject;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.reasoner.ReasonerInternalException;
 import org.semanticweb.owlapi.search.EntitySearcher;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
 import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +40,62 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class OntologyGetController {
 	private OntologyDAO ontology = OntologyDAO.getInstance();
+	private DatabaseDAO db = DatabaseDAO.getInstance();
 
+	@GetMapping("/exists/asset")
+	public boolean isSLALoaded(@RequestParam("assetName")String assetName) {
+		return ontology.getReasoner().instanceExists("neb:" + assetName);
+	}
+	
+	@GetMapping("/fillDb")
+	public void fill() {
+		try {
+			
+			
+			Set<OWLObjectProperty> objectProperties = ontology.getOntology().getObjectPropertiesInSignature();
+			List<String> objectPropertyURIs = new ArrayList<String>(objectProperties.size());
+
+			for(var e : objectProperties) {
+				objectPropertyURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+			}
+			db.createEntities(objectPropertyURIs, "object_properties");
+				
+			
+			Set<OWLDataProperty> dataProperties = ontology.getOntology().getDataPropertiesInSignature();
+			List<String> dataPropertyURIs = new ArrayList<String>(dataProperties.size());
+
+			for(var e : dataProperties) {
+				dataPropertyURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+			}
+			db.createEntities(dataPropertyURIs, "data_properties");
+			
+			
+			Set<OWLClass> classes = ontology.getOntology().getClassesInSignature();
+			List<String> classURIs = new ArrayList<String>(classes.size());
+
+			for(var e : classes) {
+				classURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+			}
+			db.createEntities(classURIs, "classes");
+			
+			
+			Set<OWLNamedIndividual> individuals = ontology.getOntology().getIndividualsInSignature(false);
+			List<String> individualURIs = new ArrayList<String>(individuals.size());
+
+			for(var e : individuals) {
+
+				individualURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+			}
+//			System.out.println(individualURIs);
+			db.createEntities(individualURIs, "individuals");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+	}
+	
     @GetMapping("/save")
     public void save() {
     	ontology.saveToFile();
@@ -246,4 +307,9 @@ public class OntologyGetController {
     	return res;
     }
     
+    
+	@GetMapping("/count/assets")
+	int registerAsset() {
+		return ontology.numberOfAssets();
+	}
 }

@@ -43,6 +43,11 @@
 			<version>2.6.5</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
