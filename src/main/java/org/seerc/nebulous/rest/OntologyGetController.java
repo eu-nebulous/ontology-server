@@ -39,6 +39,10 @@ public class OntologyGetController {
     public void save() {
     	ontology.saveToFile();
     }
+    @GetMapping("/")
+    public String test() {
+    	return "Connected";
+    }
 //    @GetMapping("/sqwrl")
 //    public void sqwrl(@RequestParam("name") String name, @RequestParam("sqwrl") String sqwrl) throws SQWRLException, SWRLParseException {
 //    	ontology.getReasoner().askSQWRL(name, sqwrl);
