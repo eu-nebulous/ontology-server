@@ -34,3 +34,5 @@ build/
 /bin/
 
 .mvn
+log.txt
+output.ttl
