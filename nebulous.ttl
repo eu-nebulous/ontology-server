@@ -99,19 +99,13 @@ odrl:rightOperandReference rdf:type owl:AnnotationProperty ;
                            rdfs:domain odrl:Constraint .
 
 
-###  http://www.w3.org/ns/odrl/2/source
-odrl:source rdf:type owl:AnnotationProperty ;
-            rdfs:domain _:genid-nodeid-genid-007e538640724ccbb7aca1df1e27530b-D522EAE98047DB26F9EB0D53C95D9A22 .
+
 
 
 ###  http://www.w3.org/ns/odrl/2/status
 odrl:status rdf:type owl:AnnotationProperty ;
             rdfs:domain odrl:Constraint .
 
-
-###  http://www.w3.org/ns/odrl/2/uid
-odrl:uid rdf:type owl:AnnotationProperty ;
-         rdfs:domain _:genid-nodeid-genid-007e538640724ccbb7aca1df1e27530b-9E46D33AF7CDCFC2DD5EB6FDA2120C38 .
 
 
 ###  http://www.w3.org/ns/odrl/2/unit
@@ -228,6 +222,10 @@ owlq:composingMetricsTransitive rdf:type owl:ObjectProperty ,
                                          owl:TransitiveProperty ;
                                 rdfs:domain owlq:Metric ;
                                 rdfs:range owlq:Metric .
+
+
+###  http://www.ics.forth.gr/ontologies/owl-q/owlq#concernedSL
+owlq:concernedSL rdf:type owl:ObjectProperty .
 
 
 ###  http://www.ics.forth.gr/ontologies/owl-q/owlq#configuration
@@ -470,6 +468,10 @@ owlq:orderedCompatible rdf:type owl:ObjectProperty ,
                                 owl:SymmetricProperty ;
                        rdfs:domain owlq:OWLList ;
                        rdfs:range owlq:OWLList .
+
+
+###  http://www.ics.forth.gr/ontologies/owl-q/owlq#penalty
+owlq:penalty rdf:type owl:ObjectProperty .
 
 
 ###  http://www.ics.forth.gr/ontologies/owl-q/owlq#positiveCorrelation
@@ -1046,6 +1048,9 @@ odrl:xone rdf:type owl:ObjectProperty ;
 
 ###  https://nebulouscloud.eu/ontology/nebOperator
 neb:nebOperator rdf:type owl:ObjectProperty .
+
+neb:output rdf:type owl:ObjectProperty .
+
 
 
 ###  https://nebulouscloud.eu/ontology/owlqConstraint
@@ -3086,6 +3091,10 @@ foaf:Organization rdf:type owl:Class .
 foaf:Person rdf:type owl:Class .
 
 
+###  https://nebulouscloud.eu/ontology/Output
+neb:Output rdf:type owl:Class .
+
+
 #################################################################
 #    Individuals
 #################################################################
@@ -3591,6 +3600,82 @@ odrl:action rdf:type owl:NamedIndividual ,
                      skos:Concept .
 
 
+###  http://www.w3.org/ns/odrl/2/actionConcepts
+odrl:actionConcepts rdf:type owl:NamedIndividual ,
+                             skos:Collection ;
+                    skos:member odrl:Action ,
+                                odrl:action ,
+                                odrl:implies ,
+                                odrl:includedIn ;
+                    skos:prefLabel "Action"@en ;
+                    skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/actions
+odrl:actions rdf:type owl:NamedIndividual ,
+                      skos:Collection ;
+             skos:member odrl:transfer ,
+                         odrl:use ;
+             skos:prefLabel "Actions for Rules"@en ;
+             skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/actionsCommon
+odrl:actionsCommon rdf:type owl:NamedIndividual ,
+                            skos:Collection ;
+                   skos:member cc:Attribution ,
+                               cc:CommercialUse ,
+                               cc:DerivativeWorks ,
+                               cc:Distribution ,
+                               cc:Notice ,
+                               cc:Reproduction ,
+                               cc:ShareAlike ,
+                               cc:Sharing ,
+                               cc:SourceCode ,
+                               odrl:acceptTracking ,
+                               odrl:aggregate ,
+                               odrl:annotate ,
+                               odrl:anonymize ,
+                               odrl:archive ,
+                               odrl:attribute ,
+                               odrl:compensate ,
+                               odrl:concurrentUse ,
+                               odrl:delete ,
+                               odrl:derive ,
+                               odrl:digitize ,
+                               odrl:display ,
+                               odrl:distribute ,
+                               odrl:ensureExclusivity ,
+                               odrl:execute ,
+                               odrl:extract ,
+                               odrl:give ,
+                               odrl:grantUse ,
+                               odrl:include ,
+                               odrl:index ,
+                               odrl:inform ,
+                               odrl:install ,
+                               odrl:modify ,
+                               odrl:move ,
+                               odrl:nextPolicy ,
+                               odrl:obtainConsent ,
+                               odrl:play ,
+                               odrl:present ,
+                               odrl:print ,
+                               odrl:read ,
+                               odrl:reproduce ,
+                               odrl:reviewPolicy ,
+                               odrl:sell ,
+                               odrl:stream ,
+                               odrl:synchronize ,
+                               odrl:textToSpeech ,
+                               odrl:transform ,
+                               odrl:translate ,
+                               odrl:uninstall ,
+                               odrl:watermark ;
+                   skos:prefLabel "Actions for Rules"@en ;
+                   skos:scopeNote "ODRL Common Vocabulary Terms"@en .
+
+
 ###  http://www.w3.org/ns/odrl/2/adHocShare
 odrl:adHocShare rdf:type owl:NamedIndividual ,
                          skos:Concept ,
@@ -3678,6 +3763,41 @@ odrl:archive rdf:type owl:NamedIndividual ,
              skos:note "Temporal constraints may be used for temporal conditions."@en ;
              skos:scopeNote "Non-Normative"@en ;
              neb:includedIn odrl:use .
+
+
+###  http://www.w3.org/ns/odrl/2/assetConcepts
+odrl:assetConcepts rdf:type owl:NamedIndividual ,
+                            skos:Collection ;
+                   skos:member odrl:Asset ,
+                               odrl:AssetCollection ;
+                   skos:prefLabel "Asset"@en ;
+                   skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/assetParty
+odrl:assetParty rdf:type owl:NamedIndividual ,
+                         skos:Collection ;
+                skos:member odrl:partOf ,
+                            odrl:source ;
+                skos:prefLabel "Asset and Party"@en ;
+                skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/assetRelations
+odrl:assetRelations rdf:type owl:NamedIndividual ,
+                             skos:Collection ;
+                    skos:member odrl:hasPolicy ,
+                                odrl:target ;
+                    skos:prefLabel "Asset Relations"@en ;
+                    skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/assetRelationsCommon
+odrl:assetRelationsCommon rdf:type owl:NamedIndividual ,
+                                   skos:Collection ;
+                          skos:member odrl:output ;
+                          skos:prefLabel "Asset Relations"@en ;
+                          skos:scopeNote "ODRL Common Vocabulary Terms"@en .
 
 
 ###  http://www.w3.org/ns/odrl/2/assignee
@@ -3793,6 +3913,18 @@ odrl:conflict rdf:type owl:NamedIndividual ,
                        skos:Concept .
 
 
+###  http://www.w3.org/ns/odrl/2/conflictConcepts
+odrl:conflictConcepts rdf:type owl:NamedIndividual ,
+                               skos:Collection ;
+                      skos:member odrl:ConflictTerm ,
+                                  odrl:conflict ,
+                                  odrl:invalid ,
+                                  odrl:perm ,
+                                  odrl:prohibit ;
+                      skos:prefLabel "Policy Conflict Strategy"@en ;
+                      skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
 ###  http://www.w3.org/ns/odrl/2/consentedParty
 odrl:consentedParty rdf:type owl:NamedIndividual ,
                              skos:Concept .
@@ -3811,6 +3943,103 @@ odrl:consequence rdf:type owl:NamedIndividual ,
 ###  http://www.w3.org/ns/odrl/2/constraint
 odrl:constraint rdf:type owl:NamedIndividual ,
                          skos:Concept .
+
+
+###  http://www.w3.org/ns/odrl/2/constraintLeftOperandCommon
+odrl:constraintLeftOperandCommon rdf:type owl:NamedIndividual ,
+                                          skos:Collection ;
+                                 skos:member odrl:absolutePosition ,
+                                             odrl:absoluteSize ,
+                                             odrl:absoluteSpatialPosition ,
+                                             odrl:absoluteTemporalPosition ,
+                                             odrl:count ,
+                                             odrl:dateTime ,
+                                             odrl:delayPeriod ,
+                                             odrl:deliveryChannel ,
+                                             odrl:elapsedTime ,
+                                             odrl:event ,
+                                             odrl:fileFormat ,
+                                             odrl:industry ,
+                                             odrl:language ,
+                                             odrl:media ,
+                                             odrl:meteredTime ,
+                                             odrl:payAmount ,
+                                             odrl:percentage ,
+                                             odrl:product ,
+                                             odrl:purpose ,
+                                             odrl:recipient ,
+                                             odrl:relativePosition ,
+                                             odrl:relativeSize ,
+                                             odrl:relativeSpatialPosition ,
+                                             odrl:relativeTemporalPosition ,
+                                             odrl:resolution ,
+                                             odrl:spatial ,
+                                             odrl:spatialCoordinates ,
+                                             odrl:systemDevice ,
+                                             odrl:timeInterval ,
+                                             odrl:unitOfCount ,
+                                             odrl:version ,
+                                             odrl:virtualLocation ;
+                                 skos:prefLabel "Constraint Left Operands"@en ;
+                                 skos:scopeNote "ODRL Common Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/constraintLogicalOperands
+odrl:constraintLogicalOperands rdf:type owl:NamedIndividual ,
+                                        skos:Collection ;
+                               skos:member odrl:and ,
+                                           odrl:andSequence ,
+                                           odrl:or ,
+                                           odrl:xone ;
+                               skos:prefLabel "Logical Constraint Operands"@en ;
+                               skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/constraintRelationalOperators
+odrl:constraintRelationalOperators rdf:type owl:NamedIndividual ,
+                                            skos:Collection ;
+                                   skos:member odrl:eq ,
+                                               odrl:gt ,
+                                               odrl:gteq ,
+                                               odrl:hasPart ,
+                                               odrl:isA ,
+                                               odrl:isAllOf ,
+                                               odrl:isAnyOf ,
+                                               odrl:isNoneOf ,
+                                               odrl:isPartOf ,
+                                               odrl:lt ,
+                                               odrl:lteq ,
+                                               odrl:neq ;
+                                   skos:prefLabel "Constraint Operators"@en ;
+                                   skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/constraintRightOpCommon
+odrl:constraintRightOpCommon rdf:type owl:NamedIndividual ,
+                                      skos:Collection ;
+                             skos:member odrl:policyUsage ;
+                             skos:prefLabel "Constraint Right Operands"@en ;
+                             skos:scopeNote "ODRL Common Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/constraints
+odrl:constraints rdf:type owl:NamedIndividual ,
+                          skos:Collection ;
+                 skos:member odrl:Constraint ,
+                             odrl:LeftOperand ,
+                             odrl:Operator ,
+                             odrl:RightOperand ,
+                             odrl:constraint ,
+                             odrl:dataType ,
+                             odrl:leftOperand ,
+                             odrl:operator ,
+                             odrl:refinement ,
+                             odrl:rightOperand ,
+                             odrl:rightOperandReference ,
+                             odrl:status ,
+                             odrl:unit ;
+                 skos:prefLabel "Constraint"@en ;
+                 skos:scopeNote "ODRL Core Vocabulary Terms"@en .
 
 
 ###  http://www.w3.org/ns/odrl/2/contractedParty
@@ -3906,6 +4135,53 @@ odrl:deliveryChannel rdf:type owl:NamedIndividual ,
                      skos:scopeNote "Non-Normative"@en .
 
 
+###  http://www.w3.org/ns/odrl/2/deprecatedTerms
+odrl:deprecatedTerms rdf:type owl:NamedIndividual ,
+                              skos:Collection ;
+                     skos:member odrl:All ,
+                                 odrl:All2ndConnections ,
+                                 odrl:AllConnections ,
+                                 odrl:AllGroups ,
+                                 odrl:AssetScope ,
+                                 odrl:Group ,
+                                 odrl:Individual ,
+                                 odrl:PartyScope ,
+                                 odrl:UndefinedTerm ,
+                                 odrl:adHocShare ,
+                                 odrl:append ,
+                                 odrl:appendTo ,
+                                 odrl:attachPolicy ,
+                                 odrl:attachSource ,
+                                 odrl:commercialize ,
+                                 odrl:copy ,
+                                 odrl:device ,
+                                 odrl:export ,
+                                 odrl:extractChar ,
+                                 odrl:extractPage ,
+                                 odrl:extractWord ,
+                                 odrl:ignore ,
+                                 odrl:inheritAllowed ,
+                                 odrl:inheritRelation ,
+                                 odrl:lease ,
+                                 odrl:lend ,
+                                 odrl:license ,
+                                 odrl:pay ,
+                                 odrl:payeeParty ,
+                                 odrl:preview ,
+                                 odrl:proximity ,
+                                 odrl:scope ,
+                                 odrl:secondaryUse ,
+                                 odrl:share ,
+                                 odrl:shareAlike ,
+                                 odrl:support ,
+                                 odrl:system ,
+                                 odrl:timedCount ,
+                                 odrl:undefined ,
+                                 odrl:write ,
+                                 odrl:writeTo ;
+                     skos:prefLabel "Deprecated Terms"@en .
+
+
 ###  http://www.w3.org/ns/odrl/2/derive
 odrl:derive rdf:type owl:NamedIndividual ,
                      skos:Concept ,
@@ -3963,6 +4239,18 @@ odrl:distribute rdf:type owl:NamedIndividual ,
                 skos:note "It is recommended to use nextPolicy to express the allowable usages by third-parties."@en ;
                 skos:scopeNote "Non-Normative"@en ;
                 neb:includedIn odrl:use .
+
+
+###  http://www.w3.org/ns/odrl/2/duties
+odrl:duties rdf:type owl:NamedIndividual ,
+                     skos:Collection ;
+            skos:member odrl:Duty ,
+                        odrl:consequence ,
+                        odrl:duty ,
+                        odrl:obligation ,
+                        odrl:remedy ;
+            skos:prefLabel "Duty"@en ;
+            skos:scopeNote "ODRL Core Vocabulary Terms"@en .
 
 
 ###  http://www.w3.org/ns/odrl/2/duty
@@ -4364,6 +4652,15 @@ odrl:license rdf:type owl:NamedIndividual ,
              skos:exactMatch odrl:grantUse .
 
 
+###  http://www.w3.org/ns/odrl/2/logicalConstraints
+odrl:logicalConstraints rdf:type owl:NamedIndividual ,
+                                 skos:Collection ;
+                        skos:member odrl:LogicalConstraint ,
+                                    odrl:operand ;
+                        skos:prefLabel "Logical Constraint"@en ;
+                        skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
 ###  http://www.w3.org/ns/odrl/2/lt
 odrl:lt rdf:type owl:NamedIndividual ,
                  skos:Concept ,
@@ -4491,6 +4788,45 @@ odrl:partOf rdf:type owl:NamedIndividual ,
                      skos:Concept .
 
 
+###  http://www.w3.org/ns/odrl/2/partyConcepts
+odrl:partyConcepts rdf:type owl:NamedIndividual ,
+                            skos:Collection ;
+                   skos:member odrl:Party ,
+                               odrl:PartyCollection ;
+                   skos:prefLabel "Party"@en ;
+                   skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/partyRoles
+odrl:partyRoles rdf:type owl:NamedIndividual ,
+                         skos:Collection ;
+                skos:member odrl:assignee ,
+                            odrl:assigneeOf ,
+                            odrl:assigner ,
+                            odrl:assignerOf ;
+                skos:prefLabel "Party Functions"@en ;
+                skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/partyRolesCommon
+odrl:partyRolesCommon rdf:type owl:NamedIndividual ,
+                               skos:Collection ;
+                      skos:member odrl:attributedParty ,
+                                  odrl:attributingParty ,
+                                  odrl:compensatedParty ,
+                                  odrl:compensatingParty ,
+                                  odrl:consentedParty ,
+                                  odrl:consentingParty ,
+                                  odrl:contractedParty ,
+                                  odrl:contractingParty ,
+                                  odrl:informedParty ,
+                                  odrl:informingParty ,
+                                  odrl:trackedParty ,
+                                  odrl:trackingParty ;
+                      skos:prefLabel "Party Functions"@en ;
+                      skos:scopeNote "ODRL Common Vocabulary Terms"@en .
+
+
 ###  http://www.w3.org/ns/odrl/2/pay
 odrl:pay rdf:type owl:NamedIndividual ,
                   skos:Concept ,
@@ -4544,6 +4880,15 @@ odrl:permission rdf:type owl:NamedIndividual ,
                          skos:Concept .
 
 
+###  http://www.w3.org/ns/odrl/2/permissions
+odrl:permissions rdf:type owl:NamedIndividual ,
+                          skos:Collection ;
+                 skos:member odrl:Permission ,
+                             odrl:permission ;
+                 skos:prefLabel "Permission"@en ;
+                 skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
 ###  http://www.w3.org/ns/odrl/2/play
 odrl:play rdf:type owl:NamedIndividual ,
                    skos:Concept ,
@@ -4554,6 +4899,38 @@ odrl:play rdf:type owl:NamedIndividual ,
           skos:note "For example, to play a video or audio track. If the action is to be performed to a wider audience than just the Assignees, then the Recipient constraint is recommended to be used." ;
           skos:scopeNote "Non-Normative"@en ;
           neb:includedIn odrl:use .
+
+
+###  http://www.w3.org/ns/odrl/2/policyConcepts
+odrl:policyConcepts rdf:type owl:NamedIndividual ,
+                             skos:Collection ;
+                    skos:member odrl:Policy ,
+                                odrl:inheritFrom ,
+                                odrl:profile ,
+                                odrl:uid ;
+                    skos:prefLabel "Policy"@en ;
+                    skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/policySubClasses
+odrl:policySubClasses rdf:type owl:NamedIndividual ,
+                               skos:Collection ;
+                      skos:member odrl:Agreement ,
+                                  odrl:Offer ,
+                                  odrl:Set ;
+                      skos:prefLabel "Policy Subclasses"@en ;
+                      skos:scopeNote "ODRL Core Vocabulary Terms"@en .
+
+
+###  http://www.w3.org/ns/odrl/2/policySubClassesCommon
+odrl:policySubClassesCommon rdf:type owl:NamedIndividual ,
+                                     skos:Collection ;
+                            skos:member odrl:Assertion ,
+                                        odrl:Privacy ,
+                                        odrl:Request ,
+                                        odrl:Ticket ;
+                            skos:prefLabel "Policy Subclasses"@en ;
+                            skos:scopeNote "ODRL Common Vocabulary Terms"@en .
 
 
 ###  http://www.w3.org/ns/odrl/2/policyUsage
@@ -4631,6 +5008,15 @@ odrl:prohibit rdf:type owl:NamedIndividual ,
 ###  http://www.w3.org/ns/odrl/2/prohibition
 odrl:prohibition rdf:type owl:NamedIndividual ,
                           skos:Concept .
+
+
+###  http://www.w3.org/ns/odrl/2/prohibitions
+odrl:prohibitions rdf:type owl:NamedIndividual ,
+                           skos:Collection ;
+                  skos:member odrl:Prohibition ,
+                              odrl:prohibition ;
+                  skos:prefLabel "Prohibition"@en ;
+                  skos:scopeNote "ODRL Core Vocabulary Terms"@en .
 
 
 ###  http://www.w3.org/ns/odrl/2/proximity
@@ -4775,6 +5161,17 @@ odrl:rightOperand rdf:type owl:NamedIndividual ,
 ###  http://www.w3.org/ns/odrl/2/rightOperandReference
 odrl:rightOperandReference rdf:type owl:NamedIndividual ,
                                     skos:Concept .
+
+
+###  http://www.w3.org/ns/odrl/2/ruleConcepts
+odrl:ruleConcepts rdf:type owl:NamedIndividual ,
+                           skos:Collection ;
+                  skos:member odrl:Rule ,
+                              odrl:failure ,
+                              odrl:function ,
+                              odrl:relation ;
+                  skos:prefLabel "Rule"@en ;
+                  skos:scopeNote "ODRL Core Vocabulary Terms"@en .
 
 
 ###  http://www.w3.org/ns/odrl/2/scope
@@ -5094,394 +5491,6 @@ odrl:writeTo rdf:type owl:NamedIndividual ,
 ###  http://www.w3.org/ns/odrl/2/xone
 odrl:xone rdf:type owl:NamedIndividual ,
                    skos:Concept .
-
-
-###  http://www.w3.org/ns/odrl/2/#actionConcepts
-<http://www.w3.org/ns/odrl/2/#actionConcepts> rdf:type owl:NamedIndividual ,
-                                                       skos:Collection ;
-                                              skos:member odrl:Action ,
-                                                          odrl:action ,
-                                                          odrl:implies ,
-                                                          odrl:includedIn ;
-                                              skos:prefLabel "Action"@en ;
-                                              skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#actions
-<http://www.w3.org/ns/odrl/2/#actions> rdf:type owl:NamedIndividual ,
-                                                skos:Collection ;
-                                       skos:member odrl:transfer ,
-                                                   odrl:use ;
-                                       skos:prefLabel "Actions for Rules"@en ;
-                                       skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#actionsCommon
-<http://www.w3.org/ns/odrl/2/#actionsCommon> rdf:type owl:NamedIndividual ,
-                                                      skos:Collection ;
-                                             skos:member cc:Attribution ,
-                                                         cc:CommercialUse ,
-                                                         cc:DerivativeWorks ,
-                                                         cc:Distribution ,
-                                                         cc:Notice ,
-                                                         cc:Reproduction ,
-                                                         cc:ShareAlike ,
-                                                         cc:Sharing ,
-                                                         cc:SourceCode ,
-                                                         odrl:acceptTracking ,
-                                                         odrl:aggregate ,
-                                                         odrl:annotate ,
-                                                         odrl:anonymize ,
-                                                         odrl:archive ,
-                                                         odrl:attribute ,
-                                                         odrl:compensate ,
-                                                         odrl:concurrentUse ,
-                                                         odrl:delete ,
-                                                         odrl:derive ,
-                                                         odrl:digitize ,
-                                                         odrl:display ,
-                                                         odrl:distribute ,
-                                                         odrl:ensureExclusivity ,
-                                                         odrl:execute ,
-                                                         odrl:extract ,
-                                                         odrl:give ,
-                                                         odrl:grantUse ,
-                                                         odrl:include ,
-                                                         odrl:index ,
-                                                         odrl:inform ,
-                                                         odrl:install ,
-                                                         odrl:modify ,
-                                                         odrl:move ,
-                                                         odrl:nextPolicy ,
-                                                         odrl:obtainConsent ,
-                                                         odrl:play ,
-                                                         odrl:present ,
-                                                         odrl:print ,
-                                                         odrl:read ,
-                                                         odrl:reproduce ,
-                                                         odrl:reviewPolicy ,
-                                                         odrl:sell ,
-                                                         odrl:stream ,
-                                                         odrl:synchronize ,
-                                                         odrl:textToSpeech ,
-                                                         odrl:transform ,
-                                                         odrl:translate ,
-                                                         odrl:uninstall ,
-                                                         odrl:watermark ;
-                                             skos:prefLabel "Actions for Rules"@en ;
-                                             skos:scopeNote "ODRL Common Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#assetConcepts
-<http://www.w3.org/ns/odrl/2/#assetConcepts> rdf:type owl:NamedIndividual ,
-                                                      skos:Collection ;
-                                             skos:member odrl:Asset ,
-                                                         odrl:AssetCollection ;
-                                             skos:prefLabel "Asset"@en ;
-                                             skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#assetParty
-<http://www.w3.org/ns/odrl/2/#assetParty> rdf:type owl:NamedIndividual ,
-                                                   skos:Collection ;
-                                          skos:member odrl:partOf ,
-                                                      odrl:source ;
-                                          skos:prefLabel "Asset and Party"@en ;
-                                          skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#assetRelations
-<http://www.w3.org/ns/odrl/2/#assetRelations> rdf:type owl:NamedIndividual ,
-                                                       skos:Collection ;
-                                              skos:member odrl:hasPolicy ,
-                                                          odrl:target ;
-                                              skos:prefLabel "Asset Relations"@en ;
-                                              skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#assetRelationsCommon
-<http://www.w3.org/ns/odrl/2/#assetRelationsCommon> rdf:type owl:NamedIndividual ,
-                                                             skos:Collection ;
-                                                    skos:member odrl:output ;
-                                                    skos:prefLabel "Asset Relations"@en ;
-                                                    skos:scopeNote "ODRL Common Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#conflictConcepts
-<http://www.w3.org/ns/odrl/2/#conflictConcepts> rdf:type owl:NamedIndividual ,
-                                                         skos:Collection ;
-                                                skos:member odrl:ConflictTerm ,
-                                                            odrl:conflict ,
-                                                            odrl:invalid ,
-                                                            odrl:perm ,
-                                                            odrl:prohibit ;
-                                                skos:prefLabel "Policy Conflict Strategy"@en ;
-                                                skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#constraintLeftOperandCommon
-<http://www.w3.org/ns/odrl/2/#constraintLeftOperandCommon> rdf:type owl:NamedIndividual ,
-                                                                    skos:Collection ;
-                                                           skos:member odrl:absolutePosition ,
-                                                                       odrl:absoluteSize ,
-                                                                       odrl:absoluteSpatialPosition ,
-                                                                       odrl:absoluteTemporalPosition ,
-                                                                       odrl:count ,
-                                                                       odrl:dateTime ,
-                                                                       odrl:delayPeriod ,
-                                                                       odrl:deliveryChannel ,
-                                                                       odrl:elapsedTime ,
-                                                                       odrl:event ,
-                                                                       odrl:fileFormat ,
-                                                                       odrl:industry ,
-                                                                       odrl:language ,
-                                                                       odrl:media ,
-                                                                       odrl:meteredTime ,
-                                                                       odrl:payAmount ,
-                                                                       odrl:percentage ,
-                                                                       odrl:product ,
-                                                                       odrl:purpose ,
-                                                                       odrl:recipient ,
-                                                                       odrl:relativePosition ,
-                                                                       odrl:relativeSize ,
-                                                                       odrl:relativeSpatialPosition ,
-                                                                       odrl:relativeTemporalPosition ,
-                                                                       odrl:resolution ,
-                                                                       odrl:spatial ,
-                                                                       odrl:spatialCoordinates ,
-                                                                       odrl:systemDevice ,
-                                                                       odrl:timeInterval ,
-                                                                       odrl:unitOfCount ,
-                                                                       odrl:version ,
-                                                                       odrl:virtualLocation ;
-                                                           skos:prefLabel "Constraint Left Operands"@en ;
-                                                           skos:scopeNote "ODRL Common Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#constraintLogicalOperands
-<http://www.w3.org/ns/odrl/2/#constraintLogicalOperands> rdf:type owl:NamedIndividual ,
-                                                                  skos:Collection ;
-                                                         skos:member odrl:and ,
-                                                                     odrl:andSequence ,
-                                                                     odrl:or ,
-                                                                     odrl:xone ;
-                                                         skos:prefLabel "Logical Constraint Operands"@en ;
-                                                         skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#constraintRelationalOperators
-<http://www.w3.org/ns/odrl/2/#constraintRelationalOperators> rdf:type owl:NamedIndividual ,
-                                                                      skos:Collection ;
-                                                             skos:member odrl:eq ,
-                                                                         odrl:gt ,
-                                                                         odrl:gteq ,
-                                                                         odrl:hasPart ,
-                                                                         odrl:isA ,
-                                                                         odrl:isAllOf ,
-                                                                         odrl:isAnyOf ,
-                                                                         odrl:isNoneOf ,
-                                                                         odrl:isPartOf ,
-                                                                         odrl:lt ,
-                                                                         odrl:lteq ,
-                                                                         odrl:neq ;
-                                                             skos:prefLabel "Constraint Operators"@en ;
-                                                             skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#constraintRightOpCommon
-<http://www.w3.org/ns/odrl/2/#constraintRightOpCommon> rdf:type owl:NamedIndividual ,
-                                                                skos:Collection ;
-                                                       skos:member odrl:policyUsage ;
-                                                       skos:prefLabel "Constraint Right Operands"@en ;
-                                                       skos:scopeNote "ODRL Common Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#constraints
-<http://www.w3.org/ns/odrl/2/#constraints> rdf:type owl:NamedIndividual ,
-                                                    skos:Collection ;
-                                           skos:member odrl:Constraint ,
-                                                       odrl:LeftOperand ,
-                                                       odrl:Operator ,
-                                                       odrl:RightOperand ,
-                                                       odrl:constraint ,
-                                                       odrl:dataType ,
-                                                       odrl:leftOperand ,
-                                                       odrl:operator ,
-                                                       odrl:refinement ,
-                                                       odrl:rightOperand ,
-                                                       odrl:rightOperandReference ,
-                                                       odrl:status ,
-                                                       odrl:unit ;
-                                           skos:prefLabel "Constraint"@en ;
-                                           skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#deprecatedTerms
-<http://www.w3.org/ns/odrl/2/#deprecatedTerms> rdf:type owl:NamedIndividual ,
-                                                        skos:Collection ;
-                                               skos:member odrl:All ,
-                                                           odrl:All2ndConnections ,
-                                                           odrl:AllConnections ,
-                                                           odrl:AllGroups ,
-                                                           odrl:AssetScope ,
-                                                           odrl:Group ,
-                                                           odrl:Individual ,
-                                                           odrl:PartyScope ,
-                                                           odrl:UndefinedTerm ,
-                                                           odrl:adHocShare ,
-                                                           odrl:append ,
-                                                           odrl:appendTo ,
-                                                           odrl:attachPolicy ,
-                                                           odrl:attachSource ,
-                                                           odrl:commercialize ,
-                                                           odrl:copy ,
-                                                           odrl:device ,
-                                                           odrl:export ,
-                                                           odrl:extractChar ,
-                                                           odrl:extractPage ,
-                                                           odrl:extractWord ,
-                                                           odrl:ignore ,
-                                                           odrl:inheritAllowed ,
-                                                           odrl:inheritRelation ,
-                                                           odrl:lease ,
-                                                           odrl:lend ,
-                                                           odrl:license ,
-                                                           odrl:pay ,
-                                                           odrl:payeeParty ,
-                                                           odrl:preview ,
-                                                           odrl:proximity ,
-                                                           odrl:scope ,
-                                                           odrl:secondaryUse ,
-                                                           odrl:share ,
-                                                           odrl:shareAlike ,
-                                                           odrl:support ,
-                                                           odrl:system ,
-                                                           odrl:timedCount ,
-                                                           odrl:undefined ,
-                                                           odrl:write ,
-                                                           odrl:writeTo ;
-                                               skos:prefLabel "Deprecated Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#duties
-<http://www.w3.org/ns/odrl/2/#duties> rdf:type owl:NamedIndividual ,
-                                               skos:Collection ;
-                                      skos:member odrl:Duty ,
-                                                  odrl:consequence ,
-                                                  odrl:duty ,
-                                                  odrl:obligation ,
-                                                  odrl:remedy ;
-                                      skos:prefLabel "Duty"@en ;
-                                      skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#logicalConstraints
-<http://www.w3.org/ns/odrl/2/#logicalConstraints> rdf:type owl:NamedIndividual ,
-                                                           skos:Collection ;
-                                                  skos:member odrl:LogicalConstraint ,
-                                                              odrl:operand ;
-                                                  skos:prefLabel "Logical Constraint"@en ;
-                                                  skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#partyConcepts
-<http://www.w3.org/ns/odrl/2/#partyConcepts> rdf:type owl:NamedIndividual ,
-                                                      skos:Collection ;
-                                             skos:member odrl:Party ,
-                                                         odrl:PartyCollection ;
-                                             skos:prefLabel "Party"@en ;
-                                             skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#partyRoles
-<http://www.w3.org/ns/odrl/2/#partyRoles> rdf:type owl:NamedIndividual ,
-                                                   skos:Collection ;
-                                          skos:member odrl:assignee ,
-                                                      odrl:assigneeOf ,
-                                                      odrl:assigner ,
-                                                      odrl:assignerOf ;
-                                          skos:prefLabel "Party Functions"@en ;
-                                          skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#partyRolesCommon
-<http://www.w3.org/ns/odrl/2/#partyRolesCommon> rdf:type owl:NamedIndividual ,
-                                                         skos:Collection ;
-                                                skos:member odrl:attributedParty ,
-                                                            odrl:attributingParty ,
-                                                            odrl:compensatedParty ,
-                                                            odrl:compensatingParty ,
-                                                            odrl:consentedParty ,
-                                                            odrl:consentingParty ,
-                                                            odrl:contractedParty ,
-                                                            odrl:contractingParty ,
-                                                            odrl:informedParty ,
-                                                            odrl:informingParty ,
-                                                            odrl:trackedParty ,
-                                                            odrl:trackingParty ;
-                                                skos:prefLabel "Party Functions"@en ;
-                                                skos:scopeNote "ODRL Common Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#permissions
-<http://www.w3.org/ns/odrl/2/#permissions> rdf:type owl:NamedIndividual ,
-                                                    skos:Collection ;
-                                           skos:member odrl:Permission ,
-                                                       odrl:permission ;
-                                           skos:prefLabel "Permission"@en ;
-                                           skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#policyConcepts
-<http://www.w3.org/ns/odrl/2/#policyConcepts> rdf:type owl:NamedIndividual ,
-                                                       skos:Collection ;
-                                              skos:member odrl:Policy ,
-                                                          odrl:inheritFrom ,
-                                                          odrl:profile ,
-                                                          odrl:uid ;
-                                              skos:prefLabel "Policy"@en ;
-                                              skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#policySubClasses
-<http://www.w3.org/ns/odrl/2/#policySubClasses> rdf:type owl:NamedIndividual ,
-                                                         skos:Collection ;
-                                                skos:member odrl:Agreement ,
-                                                            odrl:Offer ,
-                                                            odrl:Set ;
-                                                skos:prefLabel "Policy Subclasses"@en ;
-                                                skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#policySubClassesCommon
-<http://www.w3.org/ns/odrl/2/#policySubClassesCommon> rdf:type owl:NamedIndividual ,
-                                                               skos:Collection ;
-                                                      skos:member odrl:Assertion ,
-                                                                  odrl:Privacy ,
-                                                                  odrl:Request ,
-                                                                  odrl:Ticket ;
-                                                      skos:prefLabel "Policy Subclasses"@en ;
-                                                      skos:scopeNote "ODRL Common Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#prohibitions
-<http://www.w3.org/ns/odrl/2/#prohibitions> rdf:type owl:NamedIndividual ,
-                                                     skos:Collection ;
-                                            skos:member odrl:Prohibition ,
-                                                        odrl:prohibition ;
-                                            skos:prefLabel "Prohibition"@en ;
-                                            skos:scopeNote "ODRL Core Vocabulary Terms"@en .
-
-
-###  http://www.w3.org/ns/odrl/2/#ruleConcepts
-<http://www.w3.org/ns/odrl/2/#ruleConcepts> rdf:type owl:NamedIndividual ,
-                                                     skos:Collection ;
-                                            skos:member odrl:Rule ,
-                                                        odrl:failure ,
-                                                        odrl:function ,
-                                                        odrl:relation ;
-                                            skos:prefLabel "Rule"@en ;
-                                            skos:scopeNote "ODRL Core Vocabulary Terms"@en .
 
 
 #################################################################

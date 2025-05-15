@@ -1,5 +1,8 @@
 package org.seerc.nebulous.ontology;
 
+import java.util.Collection;
+
+
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataProperty;
@@ -73,35 +76,45 @@ public class OntologyManipulator extends OntologyInformationHolder{
 	 * @param dataPropertyURI the URI of the data property.
 	 * @param individualURI The URI of the individual.
 	 * @param value The value of the data property.
+	 * @param type The datatype of the value.
 	 */
-	public void createDataProperty(String dataPropertyURI,String individualURI, Object value) {
+	public void createDataProperty(String dataPropertyURI,String individualURI, String value, String type) {
 
 		OWLDataProperty dataProperty = factory.getOWLDataProperty(dataPropertyURI, prefixManager);
 		OWLNamedIndividual individual = factory.getOWLNamedIndividual(individualURI, prefixManager);
-		OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom;
-		if(value.getClass().equals(Boolean.class)) 
-			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Boolean) value);
-		else if(value.getClass().equals(Integer.class))
-			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Integer) value);
-		else if(value.getClass().equals(Long.class)) 
-			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(value.toString(), OWL2Datatype.XSD_LONG) );
-		else if(value.getClass().equals(String.class)) {
-			String v = (String) value; 
-			if(v.matches("^(-?)P(?=.)((\\d+)Y)?((\\d+)M)?((\\d+)D)?(T(?=.)((\\d+)H)?((\\d+)M)?(\\d*(\\.\\d+)?S)?)?$")) {
-				dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(v, factory.getOWLDatatype("xsd:duration", prefixManager)));
-			}else
-				dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(v, OWL2Datatype.XSD_STRING));
-		}
-		else if (value.getClass().equals(Double.class))
-			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Double) value);
-		else if (value.getClass().equals(Float.class))
-			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Float) value);
-		else
-			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (OWLLiteral) value);
+		OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(value, factory.getOWLDatatype(type, prefixManager)));
+		
+//		if(value.getClass().equals(Boolean.class)) 
+//			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Boolean) value);
+//		else if(value.getClass().equals(Integer.class))
+//			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Integer) value);
+//		else if(value.getClass().equals(Long.class)) 
+//			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(value.toString(), OWL2Datatype.XSD_LONG) );
+//		else if(value.getClass().equals(String.class)) {
+//			String v = (String) value; 
+//			if(v.matches("	")) {
+//				dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(v, factory.getOWLDatatype("xsd:duration", prefixManager)));
+//			}else
+//				dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(v, OWL2Datatype.XSD_STRING));
+//		}
+//		else if (value.getClass().equals(Double.class))
+//			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Double) value);
+//		else if (value.getClass().equals(Float.class))
+//			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Float) value);
+//		else
+//			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (OWLLiteral) value);
 
 		
 		manager.addAxiom(ontology, dataPropertyAssertionAxiom);
 	}
+//	public void createDataProperty(String dataPropertyURI,String individualURI, String value) {
+//		OWLDataProperty dataProperty = factory.getOWLDataProperty(dataPropertyURI, prefixManager);
+//		OWLNamedIndividual individual = factory.getOWLNamedIndividual(individualURI, prefixManager);
+//		OWLLiteral lit = factory.getOWLLiteral(value.split(value), null)
+//		OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom;
+//		
+//		
+//	}
 	
 	/**
 	 * Removes an individual from the ontology;
@@ -111,5 +124,11 @@ public class OntologyManipulator extends OntologyInformationHolder{
 		remover.visit(factory.getOWLNamedIndividual(individualURI, prefixManager));
 		manager.applyChanges(remover.getChanges());
 		remover.reset();
+	}
+	public void deleteIndividuals(Collection<OWLNamedIndividual> inds) {
+		inds.forEach(t -> remover.visit(t));
+		manager.applyChanges(remover.getChanges());
+		remover.reset();
+		
 	}
 }

@@ -2,6 +2,7 @@ package org.seerc.nebulous;
 
 //import java.util.HashMap;
 import org.seerc.nebulous.ontology.OntologyDAO;
+import org.seerc.nebulous.sql.DatabaseDAO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,14 +11,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NebulousApplication {
 
 	public static void main(String[] args) {
-		boolean ontologyError = false;		
+		boolean error = false;		
 		try {
 			 OntologyDAO.getInstance(args[0]);
 		} catch (Exception e) {
 			System.out.println("Could not create ontology...\nMake sure you have provided a valid ontology file...\nExiting...");
-			ontologyError = true;
+			error = true;
 		}
-		if(!ontologyError)
+	
+//		DatabaseDAO.getInstance("jdbc:postgresql://localhost/semantic_models", "postgres", "pass");
+		DatabaseDAO.getInstance(args[1], args[2], args[3]);
+
+		if(!error)
 			SpringApplication.run(NebulousApplication.class);
 	}
 

@@ -111,6 +111,9 @@ public class OntologyReasoner extends OntologyInformationHolder{
         return asUnorderedSet(subClasses.entities());
     }
 
+    public boolean instanceExists(String individualURI) {
+    	return ontology.getIndividualsInSignature().contains(factory.getOWLNamedIndividual(individualURI, prefixManager));
+    }
     public Set<OWLNamedIndividual> getInstances(String classExpressionString, boolean direct) {
     	flush();
 
