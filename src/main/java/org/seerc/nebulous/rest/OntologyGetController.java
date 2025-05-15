@@ -24,7 +24,7 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+
 import org.semanticweb.owlapi.reasoner.ReasonerInternalException;
 import org.semanticweb.owlapi.search.EntitySearcher;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
@@ -99,6 +99,10 @@ public class OntologyGetController {
     @GetMapping("/save")
     public void save() {
     	ontology.saveToFile();
+    }
+    @GetMapping("/")
+    public String test() {
+    	return "Connected";
     }
 //    @GetMapping("/sqwrl")
 //    public void sqwrl(@RequestParam("name") String name, @RequestParam("sqwrl") String sqwrl) throws SQWRLException, SWRLParseException {
@@ -306,10 +310,10 @@ public class OntologyGetController {
     	
     	return res;
     }
-    
-    
+        
 	@GetMapping("/count/assets")
 	int registerAsset() {
 		return ontology.numberOfAssets();
 	}
+
 }

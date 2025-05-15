@@ -99,19 +99,13 @@ odrl:rightOperandReference rdf:type owl:AnnotationProperty ;
                            rdfs:domain odrl:Constraint .
 
 
-###  http://www.w3.org/ns/odrl/2/source
-odrl:source rdf:type owl:AnnotationProperty ;
-            rdfs:domain _:genid-nodeid-genid-df7fada1bb624128a0d8643751a644fe-80A77C41CBD34731ED9B50691E8AF26B .
+
 
 
 ###  http://www.w3.org/ns/odrl/2/status
 odrl:status rdf:type owl:AnnotationProperty ;
             rdfs:domain odrl:Constraint .
 
-
-###  http://www.w3.org/ns/odrl/2/uid
-odrl:uid rdf:type owl:AnnotationProperty ;
-         rdfs:domain _:genid-nodeid-genid-df7fada1bb624128a0d8643751a644fe-23EC69F2C92D17805F52C1658041B7E0 .
 
 
 ###  http://www.w3.org/ns/odrl/2/unit
@@ -1055,9 +1049,8 @@ odrl:xone rdf:type owl:ObjectProperty ;
 ###  https://nebulouscloud.eu/ontology/nebOperator
 neb:nebOperator rdf:type owl:ObjectProperty .
 
-
-###  https://nebulouscloud.eu/ontology/output
 neb:output rdf:type owl:ObjectProperty .
+
 
 
 ###  https://nebulouscloud.eu/ontology/owlqConstraint

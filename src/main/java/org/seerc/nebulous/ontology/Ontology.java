@@ -32,7 +32,9 @@ public class Ontology extends OntologyInformationHolder{
 	protected OntologyReasoner reasoner;
 	private BidirectionalShortFormProvider bidiShortFormProvider;
 	private ShortFormProvider shortFormProvider;
+  
 	Map<String, Long> assets;
+
 
 	protected Ontology(String ontologyLocation, String defaultPrefix) throws OWLOntologyCreationException {
 		super(ontologyLocation, defaultPrefix);
@@ -84,7 +86,8 @@ public class Ontology extends OntologyInformationHolder{
 	public int numberOfAssets() {
 		return assets.size();
 	}
- 	public OWLClassExpression parseClassExpression(String classExpressionString) {
+
+	public OWLClassExpression parseClassExpression(String classExpressionString) {
         // Set up the real parser
         ManchesterOWLSyntaxParser parser = OWLManager.createManchesterParser();
         parser.setStringToParse(classExpressionString);
