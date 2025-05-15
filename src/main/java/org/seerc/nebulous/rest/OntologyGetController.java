@@ -40,61 +40,61 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class OntologyGetController {
 	private OntologyDAO ontology = OntologyDAO.getInstance();
-	private DatabaseDAO db = DatabaseDAO.getInstance();
+//	private DatabaseDAO db = DatabaseDAO.getInstance();
 
-	@GetMapping("/exists/asset")
-	public boolean isSLALoaded(@RequestParam("assetName")String assetName) {
-		return ontology.getReasoner().instanceExists("neb:" + assetName);
-	}
+//	@GetMapping("/exists/asset")
+//	public boolean isSLALoaded(@RequestParam("assetName")String assetName) {
+//		return ontology.getReasoner().instanceExists("neb:" + assetName);
+//	}
 	
-	@GetMapping("/fillDb")
-	public void fill() {
-		try {
-			
-			
-			Set<OWLObjectProperty> objectProperties = ontology.getOntology().getObjectPropertiesInSignature();
-			List<String> objectPropertyURIs = new ArrayList<String>(objectProperties.size());
-
-			for(var e : objectProperties) {
-				objectPropertyURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
-			}
-			db.createEntities(objectPropertyURIs, "object_properties");
-				
-			
-			Set<OWLDataProperty> dataProperties = ontology.getOntology().getDataPropertiesInSignature();
-			List<String> dataPropertyURIs = new ArrayList<String>(dataProperties.size());
-
-			for(var e : dataProperties) {
-				dataPropertyURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
-			}
-			db.createEntities(dataPropertyURIs, "data_properties");
-			
-			
-			Set<OWLClass> classes = ontology.getOntology().getClassesInSignature();
-			List<String> classURIs = new ArrayList<String>(classes.size());
-
-			for(var e : classes) {
-				classURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
-			}
-			db.createEntities(classURIs, "classes");
-			
-			
-			Set<OWLNamedIndividual> individuals = ontology.getOntology().getIndividualsInSignature(false);
-			List<String> individualURIs = new ArrayList<String>(individuals.size());
-
-			for(var e : individuals) {
-
-				individualURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
-			}
-//			System.out.println(individualURIs);
-			db.createEntities(individualURIs, "individuals");
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-				
-	}
+//	@GetMapping("/fillDb")
+//	public void fill() {
+//		try {
+//			
+//			
+//			Set<OWLObjectProperty> objectProperties = ontology.getOntology().getObjectPropertiesInSignature();
+//			List<String> objectPropertyURIs = new ArrayList<String>(objectProperties.size());
+//
+//			for(var e : objectProperties) {
+//				objectPropertyURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+//			}
+//			db.createEntities(objectPropertyURIs, "object_properties");
+//				
+//			
+//			Set<OWLDataProperty> dataProperties = ontology.getOntology().getDataPropertiesInSignature();
+//			List<String> dataPropertyURIs = new ArrayList<String>(dataProperties.size());
+//
+//			for(var e : dataProperties) {
+//				dataPropertyURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+//			}
+//			db.createEntities(dataPropertyURIs, "data_properties");
+//			
+//			
+//			Set<OWLClass> classes = ontology.getOntology().getClassesInSignature();
+//			List<String> classURIs = new ArrayList<String>(classes.size());
+//
+//			for(var e : classes) {
+//				classURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+//			}
+//			db.createEntities(classURIs, "classes");
+//			
+//			
+//			Set<OWLNamedIndividual> individuals = ontology.getOntology().getIndividualsInSignature(false);
+//			List<String> individualURIs = new ArrayList<String>(individuals.size());
+//
+//			for(var e : individuals) {
+//
+//				individualURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+//			}
+////			System.out.println(individualURIs);
+//			db.createEntities(individualURIs, "individuals");
+//			
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//				
+//	}
 	
     @GetMapping("/save")
     public void save() {
