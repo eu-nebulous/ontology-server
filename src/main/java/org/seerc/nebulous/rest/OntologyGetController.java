@@ -257,7 +257,8 @@ public class OntologyGetController {
     	else
 	    	for(OWLLiteral lit : dp)
 	    		dataProperties.add(new DataPropertyValuesResult(lit.getDatatype().getIRI().getShortForm(), lit.getLiteral()));
-    	
+    	 
+    	System.out.println(dataProperties);
 //    	Logger.get("Retrieve Data Property Values", "Individual: " + individualName, "Data Property: " + dataProperty	);
     	
     	return dataProperties;
