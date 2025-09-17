@@ -23,9 +23,9 @@ public class OntologyPostController {
 //	private DatabaseDAO db = DatabaseDAO.getInstance();
 
 	
-//	@PostMapping("/load/asset")
-//	void loadAsset(@RequestBody String assetName) {
-//		registerAsset(new RegisterAssetPostBody(assetName, Instant.now().getEpochSecond()));
+	@PostMapping("/load/asset")
+	void loadAsset(@RequestBody String assetName) {
+		registerAsset(new RegisterAssetPostBody(assetName, Instant.now().getEpochSecond()));
 //		db.getSLAClassAssertions(assetName).forEach(t -> 
 //			ontology.getManipulator().createIndividual(t.get(0), t.get(1))
 //		);
@@ -36,16 +36,15 @@ public class OntologyPostController {
 //		db.getSLADataPropertyAssertions(assetName).forEach(t -> {
 //			ontology.getManipulator().createDataProperty(t.get(1), t.get(0), t.get(2), t.get(3));
 //		});
-//	}
-	
-//	@PostMapping("/register/asset")
-//	void registerAsset(@RequestBody RegisterAssetPostBody postBody) {
-//		ontology.registerAsset(postBody.getAssetName(), postBody.getTimestamp());
-//		
-//		if(ontology.numberOfAssets() >= 3) {
-//			ontology.removeEarliestAsset();
-//		}
-//	}
+	}
+	@PostMapping("/register/asset")
+	void registerAsset(@RequestBody RegisterAssetPostBody postBody) {
+		ontology.registerAsset(postBody.getAssetName(), postBody.getTimestamp());
+		
+		if(ontology.numberOfAssets() >= 3) {
+			ontology.removeEarliestAsset();
+		}
+	}
 
 
 	@PostMapping("/create/individual")
@@ -80,10 +79,9 @@ public class OntologyPostController {
 	
 	@PostMapping("/create/dataProperty")
 	void createDataProperty(@RequestBody CreateDataPropertyPostBody postBody) {
-		System.out.println(postBody);
 		ontology.getManipulator().createDataProperty(postBody.getDataPropertyURI(), postBody.getDomainURI(), postBody.getValue(), postBody.getType());
 //		db.createDataPropertyAssertion(postBody);
-		Logger.post("Data Property Assertion", "Data Property: " + postBody.getDataPropertyURI(), "Domain: " + postBody.getDomainURI(), "Value: " + postBody.getValue());
+		Logger.post("Data Property Assertion", "Data Property: " + postBody.getDataPropertyURI(), "Domain: " + postBody.getDomainURI(), "Value: " + postBody.getValue() + "^^" + postBody.getType());
 
 
 	}

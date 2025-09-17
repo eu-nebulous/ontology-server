@@ -78,7 +78,7 @@ public class OntologyManipulator extends OntologyInformationHolder{
 	 * @param value The value of the data property.
 	 * @param type The datatype of the value.
 	 */
-	public void createDataProperty(String dataPropertyURI,String individualURI, String value, String type) {
+	public void createDataProperty(String dataPropertyURI, String individualURI, String value, String type) {
 
 		OWLDataProperty dataProperty = factory.getOWLDataProperty(dataPropertyURI, prefixManager);
 		OWLNamedIndividual individual = factory.getOWLNamedIndividual(individualURI, prefixManager);
