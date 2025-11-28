@@ -22,7 +22,6 @@ public class NebulousApplication {
 //		DatabaseDAO.getInstance("jdbc:postgresql://localhost/semantic_models", "postgres", "pass");
 //		DatabaseDAO.getInstance(args[1], args[2], args[3]);
 
-
 		if(!error)
 			SpringApplication.run(NebulousApplication.class);
 	}

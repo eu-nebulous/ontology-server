@@ -3,21 +3,15 @@ package org.seerc.nebulous.ontology;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
-
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.expression.OWLEntityChecker;
 import org.semanticweb.owlapi.expression.ShortFormEntityChecker;
 import org.semanticweb.owlapi.formats.TurtleDocumentFormat;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semanticweb.owlapi.util.BidirectionalShortFormProvider;
@@ -32,9 +26,7 @@ public class Ontology extends OntologyInformationHolder{
 	protected OntologyReasoner reasoner;
 	private BidirectionalShortFormProvider bidiShortFormProvider;
 	private ShortFormProvider shortFormProvider;
-  
 	Map<String, Long> assets;
-
 
 	protected Ontology(String ontologyLocation, String defaultPrefix) throws OWLOntologyCreationException {
 		super(ontologyLocation, defaultPrefix);
@@ -86,8 +78,7 @@ public class Ontology extends OntologyInformationHolder{
 	public int numberOfAssets() {
 		return assets.size();
 	}
-
-	public OWLClassExpression parseClassExpression(String classExpressionString) {
+ 	public OWLClassExpression parseClassExpression(String classExpressionString) {
         // Set up the real parser
         ManchesterOWLSyntaxParser parser = OWLManager.createManchesterParser();
         parser.setStringToParse(classExpressionString);

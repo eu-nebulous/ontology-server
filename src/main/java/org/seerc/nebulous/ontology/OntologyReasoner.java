@@ -56,8 +56,12 @@ public class OntologyReasoner extends OntologyInformationHolder{
 
 	}
 	
-	public List<OWLLiteral> getIndividualDataProperties(String ind, String dataProperty) {
-		return EntitySearcher.getDataPropertyValues(factory.getOWLNamedIndividual(ind, prefixManager), factory.getOWLDataProperty(dataProperty, prefixManager), ontology).toList();
+	public Set<OWLLiteral> getIndividualDataProperties(String ind, String dataProperty) {
+		return reasoner.getDataPropertyValues(
+				factory.getOWLNamedIndividual(ind, prefixManager), 
+				factory.getOWLDataProperty(dataProperty, prefixManager)
+			);
+	
 	}
 	
 	public List<OWLObjectProperty> getObjectPropertiesWithRange(String range) {

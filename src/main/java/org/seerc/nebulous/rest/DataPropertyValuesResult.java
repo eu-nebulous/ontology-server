@@ -23,7 +23,7 @@ public class DataPropertyValuesResult {
 	}
 	@Override
 	public String toString() {
-		return "DataPropertyValuesResult [datatype = " + datatype + ", value = " + value + "]";
+		return value + "^^" + datatype;
 	}
 	
 	

@@ -74,11 +74,12 @@ public class Database {
 		
 			ResultSet rs = s.executeQuery();
 			while(rs.next())
-				res.add(List.of(rs.getString(1),  rs.getString(2), rs.getString(3), rs.getString(4)));
+				res.add(List.of(rs.getString(1),  rs.getString(2), rs.getString(3)));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(res);
 		return res;
 	}
 	public void createIndividual(CreateIndividualPostBody postBody) {

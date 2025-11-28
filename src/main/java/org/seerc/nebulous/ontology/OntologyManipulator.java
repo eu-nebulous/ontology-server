@@ -2,7 +2,6 @@ package org.seerc.nebulous.ontology;
 
 import java.util.Collection;
 
-
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataProperty;
@@ -78,11 +77,18 @@ public class OntologyManipulator extends OntologyInformationHolder{
 	 * @param value The value of the data property.
 	 * @param type The datatype of the value.
 	 */
-	public void createDataProperty(String dataPropertyURI, String individualURI, String value, String type) {
+	public void createDataProperty(String dataPropertyURI,String individualURI, String value, String type) {
 
+		System.out.println(dataPropertyURI);
+		System.out.println(individualURI);
+		System.out.println(value);
+		System.out.println(type);
 		OWLDataProperty dataProperty = factory.getOWLDataProperty(dataPropertyURI, prefixManager);
 		OWLNamedIndividual individual = factory.getOWLNamedIndividual(individualURI, prefixManager);
-		OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, factory.getOWLLiteral(value, factory.getOWLDatatype(type, prefixManager)));
+		OWLDataPropertyAssertionAxiom dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(
+				dataProperty, individual, 
+				factory.getOWLLiteral(value, factory.getOWLDatatype(type, prefixManager))
+		);
 		
 //		if(value.getClass().equals(Boolean.class)) 
 //			dataPropertyAssertionAxiom = factory.getOWLDataPropertyAssertionAxiom(dataProperty, individual, (Boolean) value);

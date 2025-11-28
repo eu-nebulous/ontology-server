@@ -21,6 +21,7 @@ public class OntologyDeleteController {
 	@DeleteMapping("/delete/individual")
 	public void deleteIndividual(@RequestParam String individualName) {
 		manipulator.deleteIndividual(individualName);
+		reasoner.flush();
 		
 	}
 	

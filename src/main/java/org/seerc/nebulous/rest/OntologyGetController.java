@@ -24,7 +24,7 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLEquivalentDataPropertiesAxiom;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
-
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.reasoner.ReasonerInternalException;
 import org.semanticweb.owlapi.search.EntitySearcher;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
@@ -40,61 +40,61 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class OntologyGetController {
 	private OntologyDAO ontology = OntologyDAO.getInstance();
-//	private DatabaseDAO db = DatabaseDAO.getInstance();
+	private DatabaseDAO db = DatabaseDAO.getInstance();
 
-//	@GetMapping("/exists/asset")
-//	public boolean isSLALoaded(@RequestParam("assetName")String assetName) {
-//		return ontology.getReasoner().instanceExists("neb:" + assetName);
-//	}
+	@GetMapping("/exists/asset")
+	public boolean isSLALoaded(@RequestParam("assetName")String assetName) {
+		return ontology.getReasoner().instanceExists("neb:" + assetName);
+	}
 	
-//	@GetMapping("/fillDb")
-//	public void fill() {
-//		try {
-//			
-//			
-//			Set<OWLObjectProperty> objectProperties = ontology.getOntology().getObjectPropertiesInSignature();
-//			List<String> objectPropertyURIs = new ArrayList<String>(objectProperties.size());
-//
-//			for(var e : objectProperties) {
-//				objectPropertyURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
-//			}
-//			db.createEntities(objectPropertyURIs, "object_properties");
-//				
-//			
-//			Set<OWLDataProperty> dataProperties = ontology.getOntology().getDataPropertiesInSignature();
-//			List<String> dataPropertyURIs = new ArrayList<String>(dataProperties.size());
-//
-//			for(var e : dataProperties) {
-//				dataPropertyURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
-//			}
-//			db.createEntities(dataPropertyURIs, "data_properties");
-//			
-//			
-//			Set<OWLClass> classes = ontology.getOntology().getClassesInSignature();
-//			List<String> classURIs = new ArrayList<String>(classes.size());
-//
-//			for(var e : classes) {
-//				classURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
-//			}
-//			db.createEntities(classURIs, "classes");
-//			
-//			
-//			Set<OWLNamedIndividual> individuals = ontology.getOntology().getIndividualsInSignature(false);
-//			List<String> individualURIs = new ArrayList<String>(individuals.size());
-//
-//			for(var e : individuals) {
-//
-//				individualURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
-//			}
-////			System.out.println(individualURIs);
-//			db.createEntities(individualURIs, "individuals");
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//				
-//	}
+	@GetMapping("/fillDb")
+	public void fill() {
+		try {
+			
+			
+			Set<OWLObjectProperty> objectProperties = ontology.getOntology().getObjectPropertiesInSignature();
+			List<String> objectPropertyURIs = new ArrayList<String>(objectProperties.size());
+
+			for(var e : objectProperties) {
+				objectPropertyURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+			}
+			db.createEntities(objectPropertyURIs, "object_properties");
+				
+			
+			Set<OWLDataProperty> dataProperties = ontology.getOntology().getDataPropertiesInSignature();
+			List<String> dataPropertyURIs = new ArrayList<String>(dataProperties.size());
+
+			for(var e : dataProperties) {
+				dataPropertyURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+			}
+			db.createEntities(dataPropertyURIs, "data_properties");
+			
+			
+			Set<OWLClass> classes = ontology.getOntology().getClassesInSignature();
+			List<String> classURIs = new ArrayList<String>(classes.size());
+
+			for(var e : classes) {
+				classURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+			}
+			db.createEntities(classURIs, "classes");
+			
+			
+			Set<OWLNamedIndividual> individuals = ontology.getOntology().getIndividualsInSignature(false);
+			List<String> individualURIs = new ArrayList<String>(individuals.size());
+
+			for(var e : individuals) {
+
+				individualURIs.add(ontology.getPrefixManager().getPrefixIRI(e.getIRI()));
+			}
+//			System.out.println(individualURIs);
+			db.createEntities(individualURIs, "individuals");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+	}
 	
     @GetMapping("/save")
     public void save() {
@@ -220,7 +220,7 @@ public class OntologyGetController {
     public List<Object> getDataProperty(@RequestParam String individualName, @RequestParam String dataProperty){
 //    	System.out.print("Retrieved data property: \"" + dataProperty + "\" from " + individualName );
     	
-    	List<OWLLiteral> dp = ontology.getReasoner().getIndividualDataProperties(individualName, dataProperty);
+    	List<OWLLiteral> dp = new ArrayList<OWLLiteral>(ontology.getReasoner().getIndividualDataProperties(individualName, dataProperty));
     	List<Object> dataProperties = new ArrayList<Object>(dp.size());
     	if(dp.size() == 0)
     		return null;
@@ -246,20 +246,20 @@ public class OntologyGetController {
     }
     @GetMapping("/get/dataProperty/values")
     public List<DataPropertyValuesResult> getDataPropertyValues(@RequestParam String individualName, @RequestParam String dataProperty){
-    	 
+    	 System.out.println(individualName + " | " + dataProperty);
     	ontology.getReasoner().flush();
     	
-    	List<OWLLiteral> dp = ontology.getReasoner().getIndividualDataProperties(individualName, dataProperty);
-    	List<DataPropertyValuesResult> dataProperties = new ArrayList<DataPropertyValuesResult>(dp.size());
+    	Set<OWLLiteral> dp = ontology.getReasoner().getIndividualDataProperties(individualName, dataProperty);
+    	List<DataPropertyValuesResult> dataProperties;
 
     	if(dp.size() == 0)
     		dataProperties = List.of(new DataPropertyValuesResult("ERROR", "ERROR"));
-    	else
+    	else {
+    		dataProperties = new ArrayList<DataPropertyValuesResult>(dp.size());
 	    	for(OWLLiteral lit : dp)
 	    		dataProperties.add(new DataPropertyValuesResult(lit.getDatatype().getIRI().getShortForm(), lit.getLiteral()));
-    	 
-    	System.out.println(dataProperties);
-//    	Logger.get("Retrieve Data Property Values", "Individual: " + individualName, "Data Property: " + dataProperty	);
+    	}
+    	Logger.get("Retrieve Data Property Values", "Individual: " + individualName, "Data Property: " + dataProperty, dataProperties.toString());
     	
     	return dataProperties;
     }
@@ -274,7 +274,7 @@ public class OntologyGetController {
     	for(OWLClass c : cls)
     		res.add(c.getIRI().getFragment());
     	
-//    	Logger.get("Retrieve Superclasses", query, res.toString());
+    	Logger.get("Retrieve Superclasses", query, res.toString());
 
     	
     	return res;
@@ -291,7 +291,7 @@ public class OntologyGetController {
     	for(OWLClass c : cls)
     		res.add(c.getIRI().getFragment());
     	
-//    	Logger.get("Retrieve Subclasses", query, res.toString());
+    	Logger.get("Retrieve Subclasses", query, res.toString());
 
     	
     	return res;
@@ -306,15 +306,15 @@ public class OntologyGetController {
     	for(OWLClass c : cls)
     		res.add(c.getIRI().getFragment());
     	
-//    	Logger.get("Retrieve Equivalentclasses", query, res.toString());
+    	Logger.get("Retrieve Equivalentclasses", query, res.toString());
 
     	
     	return res;
     }
-        
+    
+    
 	@GetMapping("/count/assets")
 	int registerAsset() {
 		return ontology.numberOfAssets();
 	}
-
 }
