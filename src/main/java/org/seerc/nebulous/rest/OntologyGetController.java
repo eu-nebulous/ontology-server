@@ -161,7 +161,7 @@ public class OntologyGetController {
     		res = 0;
     	}
     	
-//    	Logger.get("Count Instances", query, Integer.toString(res));
+    	Logger.get("Count Instances", query, Integer.toString(res));
     	
     	return res;
     }
@@ -170,7 +170,7 @@ public class OntologyGetController {
     	
     	boolean output = ontology.getOntology().containsDataPropertyInSignature(ontology.getPrefixManager().getIRI(dataProperty));
 
-//    	Logger.get("Data Property Exists", dataProperty, Boolean.toString(output));
+    	Logger.get("Data Property Exists", dataProperty, Boolean.toString(output));
     	
     	return output;
     }
@@ -179,7 +179,7 @@ public class OntologyGetController {
 
     	boolean output = ontology.getOntology().containsClassInSignature(ontology.getPrefixManager().getIRI(cls));
 
-//    	Logger.get("Class Exists", cls, Boolean.toString(output));
+    	Logger.get("Class Exists", cls, Boolean.toString(output));
 
     	
     	return output;
@@ -201,7 +201,7 @@ public class OntologyGetController {
     	for(OWLNamedIndividual ind : inds)
     		instanceNames.add(ind.getIRI().getFragment());
     	
-//    	Logger.get("Retrieve Instances", query, instanceNames.toString());
+    	Logger.get("Retrieve Instances", query, instanceNames.toString());
     	
     	return instanceNames; 
     }
@@ -216,7 +216,7 @@ public class OntologyGetController {
     public List<Object> getDataProperty(@RequestParam String individualName, @RequestParam String dataProperty){
 //    	System.out.print("Retrieved data property: \"" + dataProperty + "\" from " + individualName );
     	
-    	List<OWLLiteral> dp = ontology.getReasoner().getIndividualDataProperties(individualName, dataProperty);
+    	List<OWLLiteral> dp = new ArrayList<OWLLiteral>(ontology.getReasoner().getIndividualDataProperties(individualName, dataProperty));
     	List<Object> dataProperties = new ArrayList<Object>(dp.size());
     	if(dp.size() == 0)
     		return null;
@@ -236,25 +236,26 @@ public class OntologyGetController {
     		for(OWLLiteral lit: dp) 
     			dataProperties.add(lit.toString());
     	
-//    	Logger.get("Retrieve Data Property Values", "Individual: " + individualName, "Data Property: " + dataProperty, dataProperty.toString());
+    	Logger.get("Retrieve Data Property Values", "Individual: " + individualName, "Data Property: " + dataProperty, dataProperty.toString());
 
     	return dataProperties;
     }
     @GetMapping("/get/dataProperty/values")
     public List<DataPropertyValuesResult> getDataPropertyValues(@RequestParam String individualName, @RequestParam String dataProperty){
-    	 
+    	 System.out.println(individualName + " | " + dataProperty);
     	ontology.getReasoner().flush();
     	
-    	List<OWLLiteral> dp = ontology.getReasoner().getIndividualDataProperties(individualName, dataProperty);
-    	List<DataPropertyValuesResult> dataProperties = new ArrayList<DataPropertyValuesResult>(dp.size());
+    	Set<OWLLiteral> dp = ontology.getReasoner().getIndividualDataProperties(individualName, dataProperty);
+    	List<DataPropertyValuesResult> dataProperties;
 
     	if(dp.size() == 0)
     		dataProperties = List.of(new DataPropertyValuesResult("ERROR", "ERROR"));
-    	else
+    	else {
+    		dataProperties = new ArrayList<DataPropertyValuesResult>(dp.size());
 	    	for(OWLLiteral lit : dp)
 	    		dataProperties.add(new DataPropertyValuesResult(lit.getDatatype().getIRI().getShortForm(), lit.getLiteral()));
-    	
-//    	Logger.get("Retrieve Data Property Values", "Individual: " + individualName, "Data Property: " + dataProperty	);
+    	}
+    	Logger.get("Retrieve Data Property Values", "Individual: " + individualName, "Data Property: " + dataProperty, dataProperties.toString());
     	
     	return dataProperties;
     }
@@ -269,7 +270,7 @@ public class OntologyGetController {
     	for(OWLClass c : cls)
     		res.add(c.getIRI().getFragment());
     	
-//    	Logger.get("Retrieve Superclasses", query, res.toString());
+    	Logger.get("Retrieve Superclasses", query, res.toString());
 
     	
     	return res;
@@ -286,7 +287,7 @@ public class OntologyGetController {
     	for(OWLClass c : cls)
     		res.add(c.getIRI().getFragment());
     	
-//    	Logger.get("Retrieve Subclasses", query, res.toString());
+    	Logger.get("Retrieve Subclasses", query, res.toString());
 
     	
     	return res;
@@ -301,7 +302,7 @@ public class OntologyGetController {
     	for(OWLClass c : cls)
     		res.add(c.getIRI().getFragment());
     	
-//    	Logger.get("Retrieve Equivalentclasses", query, res.toString());
+    	Logger.get("Retrieve Equivalentclasses", query, res.toString());
 
     	
     	return res;

@@ -101,7 +101,7 @@ odrl:rightOperandReference rdf:type owl:AnnotationProperty ;
 
 ###  http://www.w3.org/ns/odrl/2/source
 odrl:source rdf:type owl:AnnotationProperty ;
-            rdfs:domain _:genid-nodeid-genid-df7fada1bb624128a0d8643751a644fe-80A77C41CBD34731ED9B50691E8AF26B .
+            rdfs:domain _:genid-nodeid-genid-11ec3f3711ea4b31ba6bb904fa616280-AC3255C0CF3633258101A6429215C511 .
 
 
 ###  http://www.w3.org/ns/odrl/2/status
@@ -111,7 +111,7 @@ odrl:status rdf:type owl:AnnotationProperty ;
 
 ###  http://www.w3.org/ns/odrl/2/uid
 odrl:uid rdf:type owl:AnnotationProperty ;
-         rdfs:domain _:genid-nodeid-genid-df7fada1bb624128a0d8643751a644fe-23EC69F2C92D17805F52C1658041B7E0 .
+         rdfs:domain _:genid-nodeid-genid-11ec3f3711ea4b31ba6bb904fa616280-0734B82A8E198B2916AD2F31D5BBCA56 .
 
 
 ###  http://www.w3.org/ns/odrl/2/unit
@@ -1645,7 +1645,8 @@ odrl:proximity rdf:type owl:DatatypeProperty .
 
 
 ###  http://www.w3.org/ns/odrl/2/rightOperand
-odrl:rightOperand rdf:type owl:DatatypeProperty .
+odrl:rightOperand rdf:type owl:DatatypeProperty ;
+                  owl:equivalentProperty neb:secondOperand .
 
 
 ###  http://www.w3.org/ns/odrl/2/timedCount
@@ -1663,6 +1664,10 @@ neb:affinity rdf:type owl:DatatypeProperty .
 
 ###  https://nebulouscloud.eu/ontology/formula
 neb:formula rdf:type owl:DatatypeProperty .
+
+
+###  https://nebulouscloud.eu/ontology/secondOperand
+neb:secondOperand rdf:type owl:DatatypeProperty .
 
 
 ###  https://nebulouscloud.eu/ontology/type

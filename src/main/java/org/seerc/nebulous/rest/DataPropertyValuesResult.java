@@ -21,6 +21,10 @@ public class DataPropertyValuesResult {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	@Override
+	public String toString() {
+		return value + "^^" + datatype;
+	}
 	
 	
 }

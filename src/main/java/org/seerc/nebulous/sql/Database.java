@@ -14,7 +14,6 @@ import org.seerc.nebulous.rest.CreateDataPropertyPostBody;
 import org.seerc.nebulous.rest.CreateIndividualPostBody;
 import org.seerc.nebulous.rest.CreateObjectPropertyPostBody;
 
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 public class Database {
 	
