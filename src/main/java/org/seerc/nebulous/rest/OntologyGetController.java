@@ -165,7 +165,7 @@ public class OntologyGetController {
     		res = 0;
     	}
     	
-//    	Logger.get("Count Instances", query, Integer.toString(res));
+    	Logger.get("Count Instances", query, Integer.toString(res));
     	
     	return res;
     }
@@ -174,7 +174,7 @@ public class OntologyGetController {
     	
     	boolean output = ontology.getOntology().containsDataPropertyInSignature(ontology.getPrefixManager().getIRI(dataProperty));
 
-//    	Logger.get("Data Property Exists", dataProperty, Boolean.toString(output));
+    	Logger.get("Data Property Exists", dataProperty, Boolean.toString(output));
     	
     	return output;
     }
@@ -183,7 +183,7 @@ public class OntologyGetController {
 
     	boolean output = ontology.getOntology().containsClassInSignature(ontology.getPrefixManager().getIRI(cls));
 
-//    	Logger.get("Class Exists", cls, Boolean.toString(output));
+    	Logger.get("Class Exists", cls, Boolean.toString(output));
 
     	
     	return output;
@@ -205,7 +205,7 @@ public class OntologyGetController {
     	for(OWLNamedIndividual ind : inds)
     		instanceNames.add(ind.getIRI().getFragment());
     	
-//    	Logger.get("Retrieve Instances", query, instanceNames.toString());
+    	Logger.get("Retrieve Instances", query, instanceNames.toString());
     	
     	return instanceNames; 
     }
@@ -240,7 +240,7 @@ public class OntologyGetController {
     		for(OWLLiteral lit: dp) 
     			dataProperties.add(lit.toString());
     	
-//    	Logger.get("Retrieve Data Property Values", "Individual: " + individualName, "Data Property: " + dataProperty, dataProperty.toString());
+    	Logger.get("Retrieve Data Property Values", "Individual: " + individualName, "Data Property: " + dataProperty, dataProperty.toString());
 
     	return dataProperties;
     }
