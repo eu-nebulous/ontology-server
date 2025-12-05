@@ -6,8 +6,6 @@ COPY pom.xml pom.xml
 
 RUN mvn package -Dmaven.test.skip
 
-WORKDIR /ontology-server/target
-
 #
 # Package stage
 #

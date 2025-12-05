@@ -53,7 +53,8 @@ public class OntologyPostController {
 	void createIndividual(@RequestBody CreateIndividualPostBody postBody) {
 		ontology.getManipulator().createIndividual(postBody.getIndividualURI(), postBody.getClassURI());
 //		db.createIndividual(postBody);
-//		Logger.post("Class Assertion", postBody.getIndividualURI(), postBody.getClassURI());
+		Logger.post("Class Assertion", postBody.getIndividualURI(), postBody.getClassURI());
+
 
 	}
 	@PostMapping("/create/individual/expression")
@@ -61,18 +62,18 @@ public class OntologyPostController {
 		ontology.getManipulator().createIndividualClassExpression(postBody.getIndividualURI(), postBody.getClassURI());
 //		Logger.post("Class Assertion", postBody.getIndividualURI(), postBody.getClassURI());
 
-	}
 	@PostMapping("/create/class/expression")
 	void createClassDescriptionClass(@ RequestBody CreateClassExpressionClassPostBody postBody) {
 		ontology.getManipulator().createClassExpressionClass(postBody.getClassURI(), postBody.getClassExpression());
-//		Logger.post("Class Creation", postBody.getClassURI(), postBody.getClassExpression());
+		Logger.post("Class Creation", postBody.getClassURI(), postBody.getClassExpression());
+
 	}
 	
 	@PostMapping("/create/objectProperty")
 	void createObjectProperty(@RequestBody CreateObjectPropertyPostBody postBody) {
 		ontology.getManipulator().createObjectProperty(postBody.getObjectPropertyURI(), postBody.getDomainURI(), postBody.getRangeURI());
 //		db.createObjectPropertyAssertion(postBody);
-		//		Logger.post("Object Property Assertion", "Object Property: " + postBody.getObjectPropertyURI(), "Domain: " + postBody.getDomainURI(), "Range: " + postBody.getRangeURI());
+		Logger.post("Object Property Assertion", "Object Property: " + postBody.getObjectPropertyURI(), "Domain: " + postBody.getDomainURI(), "Range: " + postBody.getRangeURI());
 	}
 	
 	@PostMapping("/create/dataProperty")
