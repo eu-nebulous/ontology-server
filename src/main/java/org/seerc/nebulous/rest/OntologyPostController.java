@@ -61,7 +61,7 @@ public class OntologyPostController {
 	void createIndividualClassExpression(@RequestBody CreateIndividualPostBody postBody) {
 		ontology.getManipulator().createIndividualClassExpression(postBody.getIndividualURI(), postBody.getClassURI());
 //		Logger.post("Class Assertion", postBody.getIndividualURI(), postBody.getClassURI());
-
+	}
 	@PostMapping("/create/class/expression")
 	void createClassDescriptionClass(@ RequestBody CreateClassExpressionClassPostBody postBody) {
 		ontology.getManipulator().createClassExpressionClass(postBody.getClassURI(), postBody.getClassExpression());
