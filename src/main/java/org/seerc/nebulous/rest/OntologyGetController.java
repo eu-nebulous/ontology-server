@@ -1,6 +1,8 @@
 package org.seerc.nebulous.rest;
 
 import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -246,7 +248,9 @@ public class OntologyGetController {
     }
     @GetMapping("/get/dataProperty/values")
     public List<DataPropertyValuesResult> getDataPropertyValues(@RequestParam String individualName, @RequestParam String dataProperty){
-    	 System.out.println(individualName + " | " + dataProperty);
+    	dataProperty = URLDecoder.decode(dataProperty, StandardCharsets.UTF_8);
+    	individualName = URLDecoder.decode(individualName, StandardCharsets.UTF_8);
+    	
     	ontology.getReasoner().flush();
     	
     	Set<OWLLiteral> dp = ontology.getReasoner().getIndividualDataProperties(individualName, dataProperty);
@@ -269,6 +273,7 @@ public class OntologyGetController {
     public List<String> getSuperclass(@RequestParam String dlQuery){
     	
     	String query = URLDecoder.decode(dlQuery, StandardCharsets.UTF_8);
+    	System.out.println("QUERY:" + query + "\n\n\n\n");
     	Set<OWLClass> cls = ontology.getReasoner().getSuperClasses(query, false);
     	List<String> res = new ArrayList<String>(cls.size());
     	for(OWLClass c : cls)
