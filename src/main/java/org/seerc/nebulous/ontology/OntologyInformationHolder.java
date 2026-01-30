@@ -1,6 +1,8 @@
 package org.seerc.nebulous.ontology;
 
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDocumentFormat;
+
 import java.io.File;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
@@ -24,6 +26,13 @@ public class OntologyInformationHolder {
 
 		this.factory = manager.getOWLDataFactory();
 		this.prefixManager = new DefaultPrefixManager(defaultPrefix);
+		
+		OWLDocumentFormat format = ontology.getOWLOntologyManager().getOntologyFormat(ontology);
+		format.asPrefixOWLDocumentFormat().getPrefixName2PrefixMap();
+		
+		if(format.isPrefixOWLDocumentFormat())
+			prefixManager.copyPrefixesFrom(format.asPrefixOWLDocumentFormat().getPrefixName2PrefixMap());
+		
 	}
 	
 	protected OntologyInformationHolder(OntologyInformationHolder ontInf) {
